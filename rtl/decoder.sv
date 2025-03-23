@@ -8,14 +8,11 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
-`include "decoder_s1.sv"
-`include "decoder_s2.sv"
-
 module decoder (
-    input  wire                               i_clk,         // Clock input
-    input  wire                               i_reset_n,     // Active low reset
-    input  pipeline_types::decoder_s1_input_t i_decoder_s1,  // Input struct for stage 1
-    output pipeline_types::shift_reg_input_t  o_shift_reg    // Output struct for shift register
+    input wire i_clk,  // Clock input
+    input wire i_reset_n,  // Active low reset
+    input wire pipeline_types::decoder_s1_input_t i_decoder_s1,  // Input struct for stage 1
+    output wire pipeline_types::shift_reg_input_t o_shift_reg  // Output struct for shift register
 );
 
   //////////////////////////////////////////////////////////////////////

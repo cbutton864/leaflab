@@ -5,7 +5,10 @@ Description:
     Top level module for the LED controller.
 -----------------------------------------------------------------------------
 */
-module top_led (
+module top_led #(
+    parameter int DEBOUNCEWIDTH = 5  // Number of cycles for debouncing
+)
+(
     input wire clk,
     input wire rst_n,
     output wire led,
@@ -29,7 +32,7 @@ module top_led (
     // Instance: Synchronizer
     //////////////////////////////////////////////////////////////////////
     synchronizer #(
-        .DEBOUNCE_CYCLES(DEBOUNCE_CYCLES)
+        .DEBOUNCE_CYCLES(DEBOUNCEWIDTH)
     ) synchronizer_inst (
         .i_clk(clk),
         .i_reset_n(rst_n),

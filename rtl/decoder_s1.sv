@@ -11,14 +11,14 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
-`include "timing_constants.sv"  // Include the timing constants package
-`include "pipeline_types.sv"  // Include the pipeline types package
+import pipeline_types::*;
+import timing_constants::*;
 
 module decoder_s1 (
     input wire i_clk,
     input wire i_reset_n,
-    input pipeline_types::decoder_s1_input_t i_decoder_s1,  // Input struct
-    output pipeline_types::decoder_s2_input_t o_decoder_s2  // Output struct
+    input wire pipeline_types::decoder_s1_input_t i_decoder_s1,  // Input struct
+    output wire pipeline_types::decoder_s2_input_t o_decoder_s2  // Output struct
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -26,8 +26,7 @@ module decoder_s1 (
   localparam int Cwidthcounter = 10;  // Fixed width of the counter
 
   import timing_constants::*;
-  timing_params_t #(Cwidthcounter) timing;
-
+  timing_params_decode_t decode_params = timing_constants::init_decode_params(Cwidthcounter);
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
   logic w_decode_bit, w_valid;  // Combinational decoded bit and valid flag

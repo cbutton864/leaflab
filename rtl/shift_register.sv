@@ -1,7 +1,23 @@
+/*
+-----------------------------------------------------------------------------
+Module Name: shift_register
+Description: Implements a shift register for WS2812 signal processing. The shift
+Register is 25-bit, 24 for the LED data and 1 extra bit for control. The module
+directs data to either passthrough or shift based on the extra bit's state.
+Author: Curtis Button
+
+Date: March 19, 2025
+
+-----------------------------------------------------------------------------
+
+*/
+
+import pipeline_types::*;
+
 module shift_register (
     input logic i_clk,
     input logic i_reset_n,
-    input pipeline_types::shift_reg_input_t i_shift_reg,  // Input struct for shift register
+    input wire pipeline_types::shift_reg_input_t i_shift_reg,  // Input struct for shift register
     output logic [23:0] o_led_data,  // Output for the LED data (24 bits)
     output logic o_passthru_en  // Output for passthrough enable
 );
@@ -101,7 +117,7 @@ module shift_register (
             r_shift_reg <= Cresetvalue;
         end else if (i_shift_reg.treset) begin
             r_shift_reg <= Cresetvalue;
-        end else if (i_shift_reg.valid) begin
+        end else if (i_shift_reg.valid_strobe) begin
             r_shift_reg <= {r_shift_reg[WIDTH-2:0], i_shift_reg.decode_bit};
         end
     end

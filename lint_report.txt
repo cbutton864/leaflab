@@ -1,0 +1,30 @@
+Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+Start time: 17:55:04 on Mar 23,2025
+vlog -lint -sv rtl/count_enable.sv rtl/counter.sv rtl/decoder.sv rtl/decoder_s1.sv rtl/decoder_s2.sv rtl/interfaces.sv rtl/pipeline_types.sv rtl/reshaper.sv rtl/shift_register.sv rtl/synchronizer.sv rtl/timer.sv rtl/timing_constants.sv 
+-- Compiling module count_enable
+-- Compiling package counter_sv_unit
+-- Importing package pipeline_types
+-- Compiling module counter
+-- Compiling module decoder
+-- Compiling module decoder_s1
+-- Importing package timing_constants
+-- Compiling package decoder_s2_sv_unit
+-- Compiling module decoder_s2
+-- Compiling interface fifo_if
+-- Compiling package pipeline_types
+-- Compiling package reshaper_sv_unit
+-- Compiling module reshaper
+-- Compiling package shift_register_sv_unit
+-- Compiling module shift_register
+-- Compiling module synchronizer
+-- Compiling module timer
+-- Compiling package timing_constants
+
+Top level modules:
+	decoder
+	reshaper
+	shift_register
+	synchronizer
+	timer
+End time: 17:55:05 on Mar 23,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0

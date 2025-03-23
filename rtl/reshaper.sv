@@ -9,6 +9,8 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
+import timing_constants::*;
+
 module reshaper (
     input  logic i_clk,             // Clock input
     input  logic i_reset_n,         // Active low reset
@@ -21,7 +23,7 @@ module reshaper (
   localparam int Cwidthcounter = 8;  // Fixed width of the counter
 
   import timing_constants::*;
-  timing_params_t #(Cwidthcounter) timing;
+  timing_params_decode_t decode_params = timing_constants::init_decode_params(Cwidthcounter);
 
 
   //////////////////////////////////////////////////////////////////////

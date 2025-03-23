@@ -8,15 +8,12 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
-`include "count_enable.sv"
-`include "counter.sv"
-
 module timer (
     input logic i_clk,          // Clock input
     input logic i_reset_n,      // Active low reset
     input logic i_rising,       // Synchronized rising edge for LED control
     input logic i_falling,      // Synchronized falling edge for LED control
-    output pipeline_types::decoder_input_t#(10) o_count // Counter output signal
+    output pipeline_types::decoder_s1_input_t o_count // Counter output signal
 );
 
     //////////////////////////////////////////////////////////////////////

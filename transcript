@@ -1,0 +1,178 @@
+# do lint.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Questa Lattice OEM Edition-64 vmap 2024.2 Lib Mapping Utility 2024.05 May 20 2024
+# vmap work work 
+# Modifying C:/lscc/diamond/3.14/questasim/win64/../modelsim.ini
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:03 on Mar 23,2025
+# vlog -sv rtl/timing_constants.sv 
+# -- Compiling package timing_constants
+# 
+# Top level modules:
+# 	--none--
+# End time: 17:55:03 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:03 on Mar 23,2025
+# vlog -sv rtl/pipeline_types.sv 
+# -- Compiling package pipeline_types
+# 
+# Top level modules:
+# 	--none--
+# End time: 17:55:03 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:03 on Mar 23,2025
+# vlog -sv rtl/interfaces.sv 
+# -- Compiling interface fifo_if
+# 
+# Top level modules:
+# 	--none--
+# End time: 17:55:03 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:03 on Mar 23,2025
+# vlog -sv rtl/count_enable.sv 
+# -- Compiling module count_enable
+# 
+# Top level modules:
+# 	count_enable
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/counter.sv 
+# -- Compiling package counter_sv_unit
+# -- Importing package pipeline_types
+# -- Compiling module counter
+# 
+# Top level modules:
+# 	counter
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/synchronizer.sv 
+# -- Compiling module synchronizer
+# 
+# Top level modules:
+# 	synchronizer
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/reshaper.sv 
+# -- Compiling package reshaper_sv_unit
+# -- Importing package timing_constants
+# -- Compiling module reshaper
+# 
+# Top level modules:
+# 	reshaper
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/decoder_s1.sv 
+# -- Compiling module decoder_s1
+# -- Importing package pipeline_types
+# -- Importing package timing_constants
+# 
+# Top level modules:
+# 	decoder_s1
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/decoder_s2.sv 
+# -- Compiling package decoder_s2_sv_unit
+# -- Importing package pipeline_types
+# -- Importing package timing_constants
+# -- Compiling module decoder_s2
+# 
+# Top level modules:
+# 	decoder_s2
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/decoder.sv 
+# -- Compiling module decoder
+# -- Importing package pipeline_types
+# 
+# Top level modules:
+# 	decoder
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/shift_register.sv 
+# -- Compiling package shift_register_sv_unit
+# -- Importing package pipeline_types
+# -- Compiling module shift_register
+# 
+# Top level modules:
+# 	shift_register
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/timer.sv 
+# -- Compiling module timer
+# -- Importing package pipeline_types
+# 
+# Top level modules:
+# 	timer
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -sv rtl/top_led.v 
+# -- Compiling module top_led
+# -- Importing package pipeline_types
+# 
+# Top level modules:
+# 	top_led
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -lint -sv rtl/top_led.v 
+# -- Compiling module top_led
+# -- Importing package pipeline_types
+# 
+# Top level modules:
+# 	top_led
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# Start time: 17:55:04 on Mar 23,2025
+# vlog -lint -sv rtl/count_enable.sv rtl/counter.sv rtl/decoder.sv rtl/decoder_s1.sv rtl/decoder_s2.sv rtl/interfaces.sv rtl/pipeline_types.sv rtl/reshaper.sv rtl/shift_register.sv rtl/synchronizer.sv rtl/timer.sv rtl/timing_constants.sv 
+# -- Compiling module count_enable
+# -- Compiling package counter_sv_unit
+# -- Importing package pipeline_types
+# -- Compiling module counter
+# -- Compiling module decoder
+# -- Compiling module decoder_s1
+# -- Importing package timing_constants
+# -- Compiling package decoder_s2_sv_unit
+# -- Compiling module decoder_s2
+# -- Compiling interface fifo_if
+# -- Compiling package pipeline_types
+# -- Compiling package reshaper_sv_unit
+# -- Compiling module reshaper
+# -- Compiling package shift_register_sv_unit
+# -- Compiling module shift_register
+# -- Compiling module synchronizer
+# -- Compiling module timer
+# -- Compiling package timing_constants
+# 
+# Top level modules:
+# 	decoder
+# 	reshaper
+# 	shift_register
+# 	synchronizer
+# 	timer
+# End time: 17:55:04 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# can't read output from command: standard output was redirected

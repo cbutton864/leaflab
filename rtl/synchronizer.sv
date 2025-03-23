@@ -35,7 +35,7 @@ module synchronizer #(
   logic r_signal_meta, r_signal_syncd;  // Meta-stable and synchronized signals
 
   // Debounce-related signals
-  logic r_debounce_signal;  // Debounced signal
+  logic r_debounce_signal, r_debounce_signal_delayed;  // Debounced signal
   logic [DEBOUNCE_CYCLES-1:0] r_shift_reg;  // Shift register for each bit
 
   ////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ module synchronizer #(
       r_shift_reg <= '0;
     end else begin
       // we shift the bits in the shift register
-      r_shift_reg[i] <= {r_shift_reg[DEBOUNCE_CYCLES-2:0], o_signal_syncd[i]};
+      r_shift_reg <= {r_shift_reg[DEBOUNCE_CYCLES-2:0], o_signal_syncd};
       // we now check if all bits in the shift register are the same
       if (&r_shift_reg) begin
         r_debounce_signal <= 1'b1;  // All bits are 1

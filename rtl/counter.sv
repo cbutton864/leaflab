@@ -10,7 +10,7 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
-`include "pipeline_types.sv"  // Include the pipeline types package
+import pipeline_types::*;
 
 module counter (
     input logic i_clk,  // Clock input
@@ -18,7 +18,7 @@ module counter (
     input logic i_count_enable,  // Enable signal for the counter
     input logic i_rising,  // Synchronized rising edge for LED control
     input logic i_falling,  // Synchronized falling edge for LED control
-    output pipeline_types::decoder_input_t#(10) o_count  // Counter output signal
+    output pipeline_types::decoder_s1_input_t o_count  // Counter output signal
 );
 
   //////////////////////////////////////////////////////////////////////

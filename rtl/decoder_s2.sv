@@ -11,14 +11,14 @@ Date: March 19, 2025
 -----------------------------------------------------------------------------
 */
 
-`include "timing_constants.sv"  // Include the timing constants package
-`include "pipeline_types.sv"  // Include the pipeline types package
+import pipeline_types::*;
+import timing_constants::*;
 
 module decoder_s2 (
     input wire i_clk,
     input wire i_reset_n,
-    input pipeline_types::decoder_s2_input_t i_decoder_s2,  // Input struct
-    output pipeline_types::shift_reg_input_t o_shift_reg  // Output struct for shift register
+    input wire pipeline_types::decoder_s2_input_t i_decoder_s2,  // Input struct
+    output wire pipeline_types::shift_reg_input_t o_shift_reg  // Output struct for shift register
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ module decoder_s2 (
   localparam int Cwidthcounter = 10;  // Fixed width of the counter
 
   import timing_constants::*;
-  timing_params_t #(Cwidthcounter) timing;
+  timing_params_decode_t timing = timing_constants::init_decode_params(Cwidthcounter);
 
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
@@ -83,8 +83,8 @@ module decoder_s2 (
 
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
-  assign o_shift_reg.bit_value  = r_decode_bit_lcl;
-  assign o_shift_reg.valid_flag = r_valid_strobe;
+  assign o_shift_reg.decode_bit  = r_decode_bit_lcl;
+  assign o_shift_reg.valid_strobe = r_valid_strobe;
   assign o_shift_reg.treset     = r_treset;
 
 endmodule
