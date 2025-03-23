@@ -7,7 +7,7 @@ typedef struct packed {
   } decoder_s1_input_t;
 
   // Reset values for decoder_s1_input_t
-  pipeline_types::decoder_input_t #(WIDTH) reset_values = '{
+  pipeline_types::decoder_s1_input_t #(WIDTH) reset_values = '{
       counter: '0,
       rising: 1'b0,
       falling: 1'b0

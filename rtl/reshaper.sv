@@ -1,11 +1,8 @@
 /*
 -----------------------------------------------------------------------------
 Module Name: reshaper
-Description: Generates the ws2812 serial output signal, then uses an internal
-counter to reshape the signal if its short of the ideal timing. This module will
-reproduce the input signal by driving high when a rising edge is detected and will
-drive low when a falling edge is detected, unless the threshold has not been met. In that case,
-the signal will be held high until the threshold is met.
+Description: Generates the ws2812 serial output signal and reshapes the signal
+to shorter pulses are extended to meet the nominal timing requirements.
 
 Author: Curtis Button
 Date: March 19, 2025
@@ -13,131 +10,61 @@ Date: March 19, 2025
 */
 
 module reshaper (
-    input logic i_clk,             // Clock input
-    input logic i_reset_n,         // Active low reset
-    input logic i_rising,          // Synchronized rising edge for LED control
-    input logic i_falling,         // Synchronized falling edge for LED control
-    output logic o_reshaped_signal // Reshaped output signal
+    input  logic i_clk,             // Clock input
+    input  logic i_reset_n,         // Active low reset
+    input  logic i_signal_synced,   // Synced input signal
+    output logic o_reshaped_signal  // Reshaped output signal
 );
 
-    //////////////////////////////////////////////////////////////////////
-    // Parameters and Constants
-    //////////////////////////////////////////////////////////////////////
-    localparam int Cwidthcounter = 8;  // Fixed width of the counter
+  //////////////////////////////////////////////////////////////////////
+  // Parameters and Constants
+  localparam int Cwidthcounter = 8;  // Fixed width of the counter
 
-    import timing_constants::*;
-    timing_params_t #(Cwidthcounter) timing;
+  import timing_constants::*;
+  timing_params_t #(Cwidthcounter) timing;
 
-    // FSM States
-    typedef enum logic [1:0] {
-        SERIAL_LOW,       // Drive the signal low
-        SERIAL_HIGH,      // Drive the signal high
-        WAIT_FOR_T0L,  // Wait for T0L timing to be met
-        WAIT_FOR_T0H   // Wait for T0H timing to be met
-    } state_t;
 
-    //////////////////////////////////////////////////////////////////////
-    // Internal Signals
-    //////////////////////////////////////////////////////////////////////
-    state_t q_state, d_state;               // Current and next state
-    logic [Cwidthcounter-1:0] r_counter;    // Internal counter register
+  //////////////////////////////////////////////////////////////////////
+  // Internal Signals
+  logic [Cwidthcounter-1:0] r_counter;  // Internal counter register
+  logic w_signal_reshaped;  // Internal reshaped signal
 
-    //////////////////////////////////////////////////////////////////////
-    // State Register (Sequential Process)
-    //////////////////////////////////////////////////////////////////////
-    always_ff @(posedge i_clk or negedge i_reset_n) begin
-        if (!i_reset_n) begin
-            q_state <= SET_LOW;  // Reset to initial state
-        end else begin
-            q_state <= d_state;  // Update the current state
-        end
+  //////////////////////////////////////////////////////////////////////
+  // Counter Logic
+  //////////////////////////////////////////////////////////////////////
+  always_ff @(posedge i_clk or negedge i_reset_n) begin
+    if (!i_reset_n) begin
+      r_counter <= '0;
+      // Fisrt, we check if the counter has reached the maximum value to trigger a stall
+    end else if (r_counter == {Cwidthcounter{1'b1}}) begin
+      r_counter <= r_counter;
+      // Now we can accumulate the input signal
+    end else if (i_signal_synced) begin
+      r_counter <= r_counter + 1;
+      // Finaaly, initalize the counter if the signal is low
+    end else begin
+      r_counter <= '0;
     end
+  end
 
-    //////////////////////////////////////////////////////////////////////
-    // Next State Logic (Combinational Process)
-    //////////////////////////////////////////////////////////////////////
-    always_comb begin
-        // Default next state
-        d_state = q_state;
-
-        case (q_state)
-            SERIAL_HIGH: begin
-                if (i_falling && r_counter < timing.T0H_CYCLES) begin
-                    d_state = WAIT_FOR_T0H;  // Transition to wait for T0H
-                end
-                else if (i_falling && r_counter >= timing.T0H_CYCLES) begin
-                    d_state = SERIAL_LOW;
-                end
-                else if (i_falling && r_counter < timing.T1H_CYCLES) begin
-                    d_state = WAIT_FOR_T0H;  // Transition to wait for T0H
-                end
-                else if (i_falling && r_counter >= timing.T1H_CYCLES) begin
-                    d_state = SERIAL_LOW;
-                end
-            end
-
-            WAIT_FOR_T0H: begin
-                if (r_counter >= timing.T0H_CYCLES) begin
-                    d_state = SET_LOW;  // Transition to drive low
-                end
-            end
-
-            SET_LOW: begin
-                if (i_falling) begin
-                    d_state = WAIT_FOR_T0L;  // Transition to wait for T0L
-                end
-            end
-
-            WAIT_FOR_T0L: begin
-                if (r_counter >= timing.T1H_CYCLES) begin
-                    d_state = SET_HIGH;  // Transition to drive high
-                end
-            end
-
-            default: begin
-                d_state = SET_LOW;  // Default state
-            end
-        endcase
+  //////////////////////////////////////////////////////////////////////
+  // Next State Logic (Combinational Process)
+  //////////////////////////////////////////////////////////////////////
+  always_comb begin
+    // Default passthru
+    w_signal_reshaped = i_signal_synced;
+    // First we check if the counter has reached T0L threshold
+    if (r_counter < timing.T0H_CYCLES) begin
+      w_signal_reshaped = 1'b1;
     end
-
-    //////////////////////////////////////////////////////////////////////
-    // Output Logic (Combinational Process)
-    //////////////////////////////////////////////////////////////////////
-    always_comb begin
-        // Default outputs
-        o_reshaped_signal = 1'b0;
-
-        case (q_state)
-            SET_HIGH: begin
-                o_reshaped_signal = 1'b1;  // Drive the signal high
-            end
-
-            WAIT_FOR_T0H: begin
-                o_reshaped_signal = 1'b1;  // Hold the signal high
-            end
-
-            SET_LOW: begin
-                o_reshaped_signal = 1'b0;  // Drive the signal low
-            end
-
-            WAIT_FOR_T0L: begin
-                o_reshaped_signal = 1'b0;  // Hold the signal low
-            end
-        endcase
+    //Then we check if the counter is in the T1H min to nom window
+    if (r_counter inside {timing.T1H_CYCLES_MIN, timing.T1H_CYCLES}) begin
+      w_signal_reshaped = 1'b1;  // Hold high if within T1H cycles
     end
+  end
 
-    //////////////////////////////////////////////////////////////////////
-    // Counter Logic (Sequential Process)
-    //////////////////////////////////////////////////////////////////////
-    always_ff @(posedge i_clk or negedge i_reset_n) begin
-        if (!i_reset_n) begin
-            r_counter <= '0;  // Reset the counter
-        end else begin
-            if (q_state == WAIT_FOR_T0L || q_state == WAIT_FOR_T0H) begin
-                r_counter <= r_counter + 1;  // Increment the counter in WAIT states
-            end else begin
-                r_counter <= '0;  // Reset the counter in other states
-            end
-        end
-    end
+  //////////////////////////////////////////////////////////////////////
+  // Output assignment
+  assign o_reshaped_signal = w_signal_reshaped;
+
 endmodule
