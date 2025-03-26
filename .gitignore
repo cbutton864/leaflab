@@ -1,3 +1,5 @@
 work/*
 vsim.wlf
 transcript
+work/_info
+work/_lib.qdb

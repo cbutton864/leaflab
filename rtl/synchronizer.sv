@@ -18,9 +18,9 @@ module synchronizer #(
     output pipeline_types::control_path_t o_control        // Control path output signal
 );
 
-  // Internal registers for the 2-stage flip-flops
+  ////////////////////////////////////////////////////////////////////
+  // Internal registers and signals
   logic r_signal_meta, r_signal_syncd;  // Meta-stable and synchronized signals
-
   // Debounce-related signals
   logic r_debounce_signal, r_debounce_signal_delayed;  // Debounced signal
   logic [DEBOUNCE_CYCLES-1:0] r_shift_reg;  // Shift register for each bit

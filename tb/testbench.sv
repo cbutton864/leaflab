@@ -29,7 +29,10 @@ module testbench;
     rst_n = 0;
     #20 rst_n = 1;
   end
-
+  initial begin
+    $dumpfile("sim/dump.vcd");
+    $dumpvars(0, testbench);
+  end
   task automatic dut_reset();
     $display("[%0t] [TB] Resetting DUTs...", $time);
     rst_n = 0;

@@ -23,14 +23,7 @@ vlog -sv -work work tb/test_runner.sv
 vlog -sv -work work tb/testbench.sv
 
 # Load the simulation
-vsim -voptargs=+acc work.testbench
 
-# Log all signals in the design hierarchy
 log -r /*
-
-# Add signals to the waveform
-
-run 1000us
-
-# End the simulation
-quit
+run -all
+quit -f

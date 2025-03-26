@@ -137,6 +137,8 @@ class test_runner;
 
     dut_reset();
     run_reset_short_test();
+
+    $finish;
   endtask
 
 endclass
