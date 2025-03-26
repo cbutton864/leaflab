@@ -27,6 +27,7 @@ def run_sim(tool: str, gui: bool):
         print("[INFO] Running simulation using Questa%s..." % (" (GUI mode)" if gui else ""))
         sim_flags = [
             "vsim",
+            "-voptargs=+acc",
             "-wlf", str(sim_dir / "waves.wlf"),
             "-c" if not gui else "-gui",
             "work.testbench",

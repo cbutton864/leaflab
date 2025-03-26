@@ -1,61 +1,63 @@
 m255
 K4
 z2
-Z0 !s12c _opt
+Z0 !s12c _opt1
 Z1 !s99 nomlopt
+Z2 !s12c _opt
+R1
+R2
+R1
+R2
+R1
 R0
 R1
 R0
 R1
-Z2 !s12c _opt1
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
+R0
 R1
-R2
-R1
-R2
-R1
-R2
+R0
 R1
 Z3 !s12c _opt2
 R1
@@ -93,26 +95,6 @@ R3
 R1
 R3
 R1
-R0
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
-R2
-R1
 R2
 R1
 R0
@@ -120,6 +102,26 @@ R1
 R0
 R1
 R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+R2
+R1
+R2
+R1
+R2
 R1
 !s11f vlog 2024.2 2024.05, May 20 2024
 13
@@ -147,10 +149,10 @@ Z12 OL;O;2024.2;79
 R4
 T_opt1
 R5
-!s110 1742984987
-VeeoYZ3;^UHndhINn[n5l?2
+!s110 1742988320
+V1hERbP=MSA3QfMRR6ll`21
 R6
-=1-c475ab55d7aa-67e3d71b-4e-67a0
+=1-c475ab55d7aa-67e3e420-1c9-6fc
 R1
 R7
 R8
@@ -181,7 +183,7 @@ vcount_enable
 2rtl/count_enable.sv
 Z15 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
 Z16 DXx4 work 14 pipeline_types 0 22 P2Lo7>N>O=SN6ZQ8`j41Z1
-Z17 !s110 1742987779
+Z17 !s110 1742988324
 !i10b 1
 !s100 IG5JDGAE6ig=OP8^X7NFi0
 IUXT6m5A2Ddc8jbOGAXQKd2
@@ -190,14 +192,14 @@ R4
 w1742949194
 8rtl/count_enable.sv
 Frtl/count_enable.sv
-!i122 3300
+!i122 3316
 L0 11 38
 Z18 VDg1SIo80bB@j0V0VzS_@n1
 Z19 OL;L;2024.2;79
 r1
 !s85 0
 31
-Z20 !s108 1742987779.000000
+Z20 !s108 1742988324.000000
 !s107 rtl/count_enable.sv|
 !s90 -reportprogress|300|-work|work|rtl/count_enable.sv|
 !i113 0
@@ -221,7 +223,7 @@ R4
 Z23 w1742949199
 Z24 8rtl/counter.sv
 Z25 Frtl/counter.sv
-!i122 3301
+!i122 3317
 L0 13 44
 R19
 31
@@ -248,7 +250,7 @@ R4
 R23
 R24
 R25
-!i122 3301
+!i122 3317
 L0 11 0
 R19
 31
@@ -277,7 +279,7 @@ R4
 Z30 w1742949242
 Z31 8rtl/decoder.sv
 Z32 Frtl/decoder.sv
-!i122 3302
+!i122 3318
 L0 15 59
 R19
 31
@@ -419,7 +421,7 @@ R4
 R30
 R31
 R32
-!i122 3302
+!i122 3318
 Z51 L0 12 0
 R19
 31
@@ -487,7 +489,7 @@ Z58 2tb/testbench.sv
 Z59 !s105 testbench_sv_unit
 Z60 DXx4 work 17 testbench_sv_unit 0 22 U2`5bHZdOm2Wl;a9cA0?U3
 R15
-Z61 !s110 1742987780
+Z61 !s110 1742988325
 !i10b 1
 !s100 Oob6Kf[>fbFGMZ6VY5dNH0
 Ig?f[1G_WG:6CZzfHW79]a3
@@ -496,14 +498,14 @@ R4
 w1742946495
 8tb/interface_tb.sv
 Z62 Ftb/interface_tb.sv
-!i122 3313
+!i122 3329
 R55
 R18
 R19
 r1
 !s85 0
 31
-Z63 !s108 1742987780.000000
+Z63 !s108 1742988325.000000
 !s107 tb/test_runner.sv|tb/led_test_monitor.sv|tb/led_test_driver.sv|tb/interface_tb.sv|tb/testbench.sv|
 Z64 !s90 -reportprogress|300|-sv|-work|work|tb/testbench.sv|
 !i113 0
@@ -527,7 +529,7 @@ R4
 w1742949037
 8tb/led_test_driver.sv
 Z65 Ftb/led_test_driver.sv
-!i122 3310
+!i122 3326
 R51
 R19
 31
@@ -554,7 +556,7 @@ R4
 w1742949788
 8tb/led_test_monitor.sv
 Z66 Ftb/led_test_monitor.sv
-!i122 3311
+!i122 3327
 R51
 R19
 31
@@ -603,7 +605,7 @@ R4
 w1742949401
 8rtl/pipeline_types.sv
 Frtl/pipeline_types.sv
-!i122 3299
+!i122 3315
 Z68 L0 10 0
 VP2Lo7>N>O=SN6ZQ8`j41Z1
 R19
@@ -634,7 +636,7 @@ R4
 Z70 w1742949332
 Z71 8rtl/reshaper.sv
 Z72 Frtl/reshaper.sv
-!i122 3304
+!i122 3320
 L0 12 64
 R19
 31
@@ -661,7 +663,7 @@ R4
 R70
 R71
 R72
-!i122 3304
+!i122 3320
 R68
 R19
 31
@@ -676,7 +678,7 @@ Z75 2rtl/shift_register.sv
 R15
 R16
 DXx4 work 22 shift_register_sv_unit 0 22 8;V3MSTe0@_c5>fU8:<]91
-R61
+R17
 R18
 r1
 !s85 0
@@ -689,7 +691,7 @@ R4
 Z76 w1742949287
 Z77 8rtl/shift_register.sv
 Z78 Frtl/shift_register.sv
-!i122 3305
+!i122 3321
 L0 17 120
 R19
 31
@@ -703,7 +705,7 @@ Xshift_register_sv_unit
 R75
 R15
 R16
-R61
+R17
 V8;V3MSTe0@_c5>fU8:<]91
 r1
 !s85 0
@@ -716,7 +718,7 @@ R4
 R76
 R77
 R78
-!i122 3305
+!i122 3321
 L0 15 0
 R19
 31
@@ -739,7 +741,7 @@ R4
 w1742987636
 8rtl/synchronizer.sv
 Frtl/synchronizer.sv
-!i122 3303
+!i122 3319
 L0 11 71
 R18
 R19
@@ -992,7 +994,7 @@ w1742984975
 Z103 Ftb/test_runner.sv
 R65
 R66
-!i122 3312
+!i122 3328
 R51
 R19
 31
@@ -1020,7 +1022,7 @@ R4
 Z104 w1742986436
 Z105 8tb/testbench.sv
 Z106 Ftb/testbench.sv
-!i122 3313
+!i122 3329
 L0 14 72
 R19
 31
@@ -1052,7 +1054,7 @@ R62
 R65
 R66
 R103
-!i122 3313
+!i122 3329
 R51
 R19
 31
@@ -1075,7 +1077,7 @@ R4
 w1742949397
 8rtl/timer.sv
 Frtl/timer.sv
-!i122 3306
+!i122 3322
 L0 9 33
 R18
 R19
@@ -1100,7 +1102,7 @@ R4
 w1742867104
 8rtl/timing_constants.sv
 Frtl/timing_constants.sv
-!i122 3298
+!i122 3314
 R55
 V6baLDd5<K;9Zdl5Q^Qak33
 R19
@@ -1125,7 +1127,7 @@ R4
 w1742949098
 R89
 R90
-!i122 3308
+!i122 3324
 R55
 V[gOGOo^i?O=HiOfN__STC0
 R19
@@ -1151,7 +1153,7 @@ R4
 w1742949394
 8rtl/top_led.sv
 Frtl/top_led.sv
-!i122 3307
+!i122 3323
 L0 10 73
 R18
 R19
