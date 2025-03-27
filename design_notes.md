@@ -18,7 +18,7 @@ While I didn't fully separate control and data paths (the modules were already s
 2. **Edge Detection**: Passes through an edge detector, which generates events to control the decoder.
 3. **Clock Enable Division**: The data sample clock is divided by 4 to reduce logic levels and improve design efficiency.
 4. **Shift Register**: Decoded data feeds into a shift register. Instead of using separate counters, the shifter uses a marker bit to track its boundaries.
-5. **Data Latch**: When the register is full, the data is latched.
+5. **Data Buffer**: When the register is full, the data is buffered.
 6. **Output FSM**: A minimal FSM briefly exposes the valid data to top-level outputs and enables a pulse reshaper module to output the waveform to the next device in the chain.
 7. **Pulse Reshaper**: Handles pulse width normalization—it stretches short pulses up to nominal durations based on the detected timing.
 
