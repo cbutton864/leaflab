@@ -13,7 +13,7 @@ This design was initially intended to be implemented in Verilog with a Cocotb ru
 Run simulation or lint using QuestaSim or Icarus Verilog.
 
 #### Options:
-- `-h, --help`  
+- `-h, --help`  q
     Show this help message and exit.
 - `--lint`  
     Run lint only.

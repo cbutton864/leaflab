@@ -1,4 +1,6 @@
-# Reading pref.tcl
+# vsim -voptargs="+acc" -wlf sim\waves.wlf -c work.testbench -do "sim.do" -l sim\transcript.log 
+# Start time: 12:32:38 on Mar 27,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
 # //  Questa Lattice OEM Edition-64
 # //  Version 2024.2 win64 May 20 2024
 # //
@@ -13,11 +15,6 @@
 # // of the Customer's facilities without the express written permission of SISW,
 # // and may not be used in any way not expressly authorized by SISW.
 # //
-# vsim -voptargs="+acc" -wlf sim\waves.wlf -gui work.testbench -do "sim.do" -l sim\transcript.log 
-# Start time: 07:25:20 on Mar 26,2025
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading sv_std.std
 # Loading work.timing_constants_tb(fast)
 # Loading work.testbench_sv_unit(fast)
@@ -45,47 +42,47 @@
 # vmap work work 
 # Modifying C:/lscc/diamond/3.14/questasim/win64/../modelsim.ini
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/timing_constants.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/timing_constants.sv 
 # -- Compiling package timing_constants
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/pipeline_types.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/pipeline_types.sv 
 # -- Compiling package pipeline_types
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/count_enable.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/count_enable.sv 
 # -- Compiling module count_enable
 # -- Importing package pipeline_types
 # 
 # Top level modules:
 # 	count_enable
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/counter.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/counter.sv 
 # -- Compiling package counter_sv_unit
 # -- Importing package pipeline_types
 # -- Compiling module counter
 # 
 # Top level modules:
 # 	counter
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/decoder.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/decoder.sv 
 # -- Compiling package decoder_sv_unit
 # -- Importing package pipeline_types
 # -- Importing package timing_constants
@@ -93,110 +90,110 @@
 # 
 # Top level modules:
 # 	decoder
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/synchronizer.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/synchronizer.sv 
 # -- Compiling module synchronizer
 # -- Importing package pipeline_types
 # 
 # Top level modules:
 # 	synchronizer
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/reshaper.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/reshaper.sv 
 # -- Compiling package reshaper_sv_unit
 # -- Importing package timing_constants
 # -- Compiling module reshaper
 # 
 # Top level modules:
 # 	reshaper
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:24 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/shift_register.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/shift_register.sv 
 # -- Compiling package shift_register_sv_unit
 # -- Importing package pipeline_types
 # -- Compiling module shift_register
 # 
 # Top level modules:
 # 	shift_register
-# End time: 07:25:24 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/timer.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/timer.sv 
 # -- Compiling module timer
 # -- Importing package pipeline_types
 # 
 # Top level modules:
 # 	timer
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -work work rtl/top_led.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -work work rtl/top_led.sv 
 # -- Compiling module top_led
 # -- Importing package pipeline_types
 # 
 # Top level modules:
 # 	top_led
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/timing_constants_tb.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -sv -work work tb/timing_constants_tb.sv 
 # -- Compiling package timing_constants_tb
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:39 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/interface_tb.sv 
+# Start time: 12:32:39 on Mar 27,2025
+# vlog -sv -work work tb/interface_tb.sv 
 # -- Compiling interface led_if
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:40 on Mar 27,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/led_test_driver.sv 
+# Start time: 12:32:40 on Mar 27,2025
+# vlog -sv -work work tb/led_test_driver.sv 
 # -- Compiling package led_test_driver_sv_unit
 # -- Importing package timing_constants_tb
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:40 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/led_test_monitor.sv 
+# Start time: 12:32:40 on Mar 27,2025
+# vlog -sv -work work tb/led_test_monitor.sv 
 # -- Compiling package led_test_monitor_sv_unit
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:40 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/test_runner.sv 
+# Start time: 12:32:40 on Mar 27,2025
+# vlog -sv -work work tb/test_runner.sv 
 # -- Compiling package test_runner_sv_unit
 # -- Importing package timing_constants_tb
 # 
 # Top level modules:
 # 	--none--
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:40 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 07:25:25 on Mar 26,2025
-# vlog -reportprogress 300 -sv -work work tb/testbench.sv 
+# Start time: 12:32:40 on Mar 27,2025
+# vlog -sv -work work tb/testbench.sv 
 # -- Compiling interface led_if
 # -- Compiling package testbench_sv_unit
 # -- Importing package timing_constants_tb
@@ -204,7 +201,7 @@
 # 
 # Top level modules:
 # 	testbench
-# End time: 07:25:25 on Mar 26,2025, Elapsed time: 0:00:00
+# End time: 12:32:40 on Mar 27,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # [0] [TEST] Resetting DUTs...
 # [0] [DEBUG] vif handle = /testbench/led_if_0
@@ -259,7 +256,5 @@
 # [785562] [TEST] Reset short test complete.
 # ** Note: $finish    : tb/test_runner.sv(141)
 #    Time: 785562 ns  Iteration: 0  Instance: /testbench
-# 1
-# Break in Task testbench_sv_unit/test_runner::run_all at tb/test_runner.sv line 141
-# End time: 07:25:34 on Mar 26,2025, Elapsed time: 0:00:14
-# Errors: 0, Warnings: 1
+# End time: 12:32:41 on Mar 27,2025, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 0

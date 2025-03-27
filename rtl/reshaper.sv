@@ -10,10 +10,10 @@ Date: March 19, 2025
 import timing_constants::*;
 
 module reshaper (
-    input  wire  i_clk,             // Clock input
-    input  wire  i_reset_n,         // Active low reset
-    input  wire  i_passthru_en,     // Passthrough enable signal
-    input  wire  i_signal_synced,   // Synced input signal
+    input  logic i_clk,             // Clock input
+    input  logic i_reset_n,         // Active low reset
+    input  logic i_passthru_en,     // Passthrough enable signal
+    input  logic i_signal_synced,   // Synced input signal
     output logic o_reshaped_signal  // Reshaped output signal
 );
 

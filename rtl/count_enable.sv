@@ -9,8 +9,8 @@ Date: March 19, 2025
 */
 
 module count_enable (
-    input  wire                                i_clk,          // Clock input
-    input  wire                                i_reset_n,      // Active low reset
+    input  logic                               i_clk,          // Clock input
+    input  logic                               i_reset_n,      // Active low reset
     input  wire pipeline_types::control_path_t i_control,      // Control path input signal
     output logic                               o_count_enable  // Enable signal for the counter
 );

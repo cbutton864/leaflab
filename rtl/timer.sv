@@ -7,8 +7,8 @@ Date: March 19, 2025
 */
 
 module timer (
-    input wire i_clk,  // Clock input
-    input wire i_reset_n,  // Active low reset
+    input logic i_clk,  // Clock input
+    input logic i_reset_n,  // Active low reset
     input wire pipeline_types::control_path_t i_control,  // Control path input signal
     output pipeline_types::decoder_input_t o_decoder_input  // Counter output signal
 );

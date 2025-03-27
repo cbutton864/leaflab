@@ -10,19 +10,19 @@ Date: March 19, 2025
 module top_led #(
     parameter int DEBOUNCEWIDTH = 5  // Number of cycles for debouncing
 ) (
-    input wire i_clk,
-    input wire i_rst_n,
-    input wire i_serial,
-    output wire o_serial,
-    output wire [23:0] o_led_data
+    input logic i_clk,
+    input logic i_rst_n,
+    input logic i_serial,
+    output logic o_serial,
+    output logic [23:0] o_led_data
 
 );
 
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  wire signal_syncd;  // Synchronized signal
-  wire [9:0] count;  // Counter output from the timer
-  wire passthru_en;  // Passthrough enable from shift register
+  logic signal_syncd;  // Synchronized signal
+  logic [9:0] count;  // Counter output from the timer
+  logic passthru_en;  // Passthrough enable from shift register
 
   pipeline_types::decoder_input_t decoder_input;  // Input struct for decoder_s1
   pipeline_types::shift_reg_input_t shift_reg_input;  // Input struct for shift register
@@ -76,7 +76,7 @@ module top_led #(
       .i_reset_n    (i_rst_n),
       .i_shift_reg  (shift_reg_input),  // Input struct from decoder
       .o_led_data   (o_led_data),       // LED data output
-      .o_passthru_en(passthru_en)     // Passthrough enable output
+      .o_passthru_en(passthru_en)       // Passthrough enable output
   );
 
 endmodule

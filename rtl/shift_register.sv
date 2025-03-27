@@ -15,11 +15,11 @@ Date: March 19, 2025
 import pipeline_types::*;
 
 module shift_register (
-    input wire i_clk,
-    input wire i_reset_n,
+    input logic i_clk,
+    input logic i_reset_n,
     input wire pipeline_types::shift_reg_input_t i_shift_reg,
     output logic [23:0] o_led_data,  // Output for the LED data (24 bits)
-    output wire o_passthru_en  // Output for passthrough enable
+    output logic o_passthru_en  // Output for passthrough enable
 );
 
   //////////////////////////////////////////////////////////////////////

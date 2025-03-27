@@ -13,11 +13,11 @@ import pipeline_types::*;
 import timing_constants::*;
 
 module decoder (
-    input wire i_clk,
-    input wire i_reset_n,
+    input logic i_clk,
+    input logic i_reset_n,
     input wire pipeline_types::control_path_t i_control,
     input wire pipeline_types::decoder_input_t i_decoder,
-    output wire pipeline_types::shift_reg_input_t o_shift_reg
+    output pipeline_types::shift_reg_input_t o_shift_reg
 );
 
   //////////////////////////////////////////////////////////////////////
