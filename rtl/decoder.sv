@@ -9,15 +9,15 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 
-import pipeline_types::*;
-import timing_constants::*;
-
-module decoder (
-    input logic i_clk,
-    input logic i_reset_n,
-    input wire pipeline_types::control_path_t i_control,
-    input wire pipeline_types::decoder_input_t i_decoder,
-    output pipeline_types::shift_reg_input_t o_shift_reg
+module decoder
+  import pipeline_types::*;
+  import timing_constants::*;
+(
+    input  logic             i_clk,
+    input  logic             i_reset_n,
+    input  control_path_t    i_control,
+    input  decoder_input_t   i_decoder,
+    output shift_reg_input_t o_shift_reg
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -26,8 +26,10 @@ module decoder (
 
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  logic w_decode_bit, w_valid;  // Combinational decoded bit and valid flag
-  logic r_decode_bit, r_valid;  // Registered decoded bit and valid flag
+  logic w_decode_bit;
+  logic w_valid;  // Combinational decoded bit and valid flag
+  logic r_decode_bit;
+  logic r_valid;  // Registered decoded bit and valid flag
 
   //////////////////////////////////////////////////////////////////////
   // Decode High Cycle Logic (Window Comparator)
@@ -39,12 +41,12 @@ module decoder (
 
     // Check the T1H range
     if (i_decoder.counter >= timing_constants::T1H_CYCLES_DECODER_MIN &&
-            i_decoder.counter <= timing_constants::T1H_CYCLES_DECODER_MAX) begin
+      i_decoder.counter <= timing_constants::T1H_CYCLES_DECODER_MAX) begin
       w_decode_bit = 1'b1;
       w_valid      = 1'b1;
     end  // Check the T0H range
     else if (i_decoder.counter >= timing_constants::T0H_CYCLES_DECODER_MIN &&
-                 i_decoder.counter <= timing_constants::T0H_CYCLES_DECODER_MAX) begin
+      i_decoder.counter <= timing_constants::T0H_CYCLES_DECODER_MAX) begin
       w_decode_bit = 1'b0;
       w_valid      = 1'b1;
     end

@@ -8,14 +8,14 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 
-import pipeline_types::*;
-
-module counter (
-    input logic i_clk,  // Clock input
-    input logic i_reset_n,  // Active low reset input
-    input logic i_count_enable,  // Enable signal for the counter
-    input wire pipeline_types::control_path_t i_control,  // Control path input signal
-    output pipeline_types::decoder_input_t o_decoder_input  // Counter output signal
+module counter
+  import pipeline_types::*;
+(
+    input  logic           i_clk,           // Clock input
+    input  logic           i_reset_n,       // Active low reset input
+    input  logic           i_count_enable,  // Enable signal for the counter
+    input  control_path_t  i_control,       // Control path input signal
+    output decoder_input_t o_decoder_input  // Counter output signal
 );
 
   //////////////////////////////////////////////////////////////////////

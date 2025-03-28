@@ -12,14 +12,16 @@ Date: March 19, 2025
 
 */
 
-import pipeline_types::*;
 
-module shift_register (
-    input logic i_clk,
-    input logic i_reset_n,
-    input wire pipeline_types::shift_reg_input_t i_shift_reg,
-    output logic [23:0] o_led_data,  // Output for the LED data (24 bits)
-    output logic o_passthru_en  // Output for passthrough enable
+
+module shift_register
+  import pipeline_types::*;
+(
+    input  logic                    i_clk,
+    input  logic                    i_reset_n,
+    input  shift_reg_input_t        i_shift_reg,
+    output logic             [23:0] o_led_data,    // Output for the LED data (24 bits)
+    output logic                    o_passthru_en  // Output for passthrough enable
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -34,15 +36,18 @@ module shift_register (
     PASSTHRU
   } state_t;  // FSM states
 
-  state_t q_state, d_state;  // Current and next state
+  state_t q_state;
+  state_t d_state; // Current and next state
 
   //////////////////////////////////////////////////////////////////////
   // Shift Register Signals
   logic [WIDTH-1:0] r_shift_reg;
   // Control Signals
-  logic w_passthru_en, w_shift_en;
+  logic w_passthru_en;
+  logic w_shift_en   ;
   // LED Data
-  logic [23:0] w_led_data, r_led_data;
+  logic [23:0] w_led_data;
+  logic [23:0] r_led_data;
 
   //////////////////////////////////////////////////////////////////////
   // FSM Logic
@@ -86,8 +91,8 @@ module shift_register (
   always_comb begin
     // Default Initial
     w_passthru_en = 1'b0;
-    w_shift_en = 1'b0;
-    w_led_data = 24'b0;
+    w_shift_en    = 1'b0;
+    w_led_data    = 24'b0;
     case (q_state)
       SHIFT: begin
         // Allow the control edge to trigger a shift
@@ -96,13 +101,13 @@ module shift_register (
       end
       PASSTHRU: begin
         w_passthru_en = 1'b1;
-        w_led_data = r_shift_reg[23:0];  // Output the upper 24-bits SR as LED data
+        w_led_data    = r_shift_reg[23:0];  // Output the upper 24-bits SR as LED data
       end
       default: begin
         // Default "other"
         w_passthru_en = 1'b0;
-        w_shift_en = 1'b0;
-        w_led_data = 24'b0;
+        w_shift_en    = 1'b0;
+        w_led_data    = 24'b0;
       end
     endcase
   end
@@ -131,6 +136,6 @@ module shift_register (
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
   assign o_passthru_en = w_passthru_en;  // Assign passthrough enable output
-  assign o_led_data = r_led_data;  // Assign LED data output
+  assign o_led_data    = r_led_data;  // Assign LED data output
 
 endmodule

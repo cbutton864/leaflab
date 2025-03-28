@@ -8,11 +8,14 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 
-module count_enable (
-    input  logic                               i_clk,          // Clock input
-    input  logic                               i_reset_n,      // Active low reset
-    input  wire pipeline_types::control_path_t i_control,      // Control path input signal
-    output logic                               o_count_enable  // Enable signal for the counter
+module count_enable
+  import pipeline_types::*;  // Importing the pipeline types
+(
+    input  logic          i_clk,          // Clock input
+    input  logic          i_reset_n,      // Active low reset
+    input  control_path_t i_control,      // Control path input signal
+    output logic          o_count_enable  // Enable signal for the counter
+
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -28,18 +31,18 @@ module count_enable (
   // Here we increment the counter and generate the clock enable signal
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
-      r_counter <= '0;
+      r_counter      <= '0;
       o_count_enable <= 1'b0;
     end else begin
       if (r_counter < (DIVISOR - 1)) begin
-        r_counter <= r_counter + 1;
+        r_counter      <= r_counter + 1;
         o_count_enable <= 1'b0;
       end else begin
-        r_counter <= '0;
+        r_counter      <= '0;
         o_count_enable <= 1'b1;
       end
       if (i_control.rising) begin
-        r_counter <= '0;
+        r_counter      <= '0;
         o_count_enable <= 1'b0;
       end
     end

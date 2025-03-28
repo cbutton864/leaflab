@@ -7,9 +7,11 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 
-import timing_constants::*;
 
-module reshaper (
+
+module reshaper
+  import timing_constants::*;
+(
     input  logic i_clk,             // Clock input
     input  logic i_reset_n,         // Active low reset
     input  logic i_passthru_en,     // Passthrough enable signal

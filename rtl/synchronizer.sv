@@ -8,14 +8,16 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 
-module synchronizer #(
+module synchronizer
+    import pipeline_types::*;  // Importing the pipeline types
+#(
     parameter int DEBOUNCE_CYCLES = 5  // Number of cycles for debouncing
 ) (
-    input  logic                                i_clk,           // Clock input
-    input  logic                                i_reset_n,       // Active low reset
-    input  logic                                i_signal_async,  // Input signal to be synchronized
-    output logic                               o_signal_syncd,  // Synchronized output signal
-    output pipeline_types::control_path_t o_control        // Control path output signal
+    input  logic          i_clk,           // Clock input
+    input  logic          i_reset_n,       // Active low reset
+    input  logic          i_signal_async,  // Input signal to be synchronized
+    output logic          o_signal_syncd,  // Synchronized output signal
+    output control_path_t o_control        // Control path output signal
 );
 
   ////////////////////////////////////////////////////////////////////
