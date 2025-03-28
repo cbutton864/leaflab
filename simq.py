@@ -3,8 +3,9 @@ import subprocess
 import os
 import platform
 from pathlib import Path
+import shutil  # For removing directories
 
-#IMPORTANT: ICARUS will not run these SV testbenches.
+# IMPORTANT: ICARUS will not run these SV testbenches.
 
 
 def run_lint(tool: str):
@@ -14,6 +15,7 @@ def run_lint(tool: str):
     else:
         print("[INFO] Running Verilog lint using Questa...")
         subprocess.run(["vsim", "-do", "lint.do"], check=True)
+
 
 def run_sim(tool: str, gui: bool):
     sim_dir = Path("sim")
@@ -36,18 +38,39 @@ def run_sim(tool: str, gui: bool):
         ]
         subprocess.run(sim_flags, check=True)
 
+
+def clean():
+    """Clean up generated simulation files and directories."""
+    sim_dir = Path("sim")
+    if sim_dir.exists() and sim_dir.is_dir():
+        print(f"[INFO] Removing simulation directory: {sim_dir}")
+        shutil.rmtree(sim_dir)
+
+    # Remove other generated files if needed
+    files_to_remove = ["transcript.log", "waves.wlf"]
+    for file in files_to_remove:
+        file_path = Path(file)
+        if file_path.exists():
+            print(f"[INFO] Removing file: {file_path}")
+            file_path.unlink()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run simulation or lint using QuestaSim or Icarus Verilog")
     parser.add_argument("--lint", action="store_true", help="Run lint only")
     parser.add_argument("--gui", action="store_true", help="Run simulation in GUI mode")
     parser.add_argument("--tool", choices=["questa", "icarus"], default="questa", help="Select simulation tool")
+    parser.add_argument("--clean", action="store_true", help="Clean up generated files")
 
     args = parser.parse_args()
 
-    if args.lint:
+    if args.clean:
+        clean()
+    elif args.lint:
         run_lint(tool=args.tool)
     else:
         run_sim(tool=args.tool, gui=args.gui)
+
 
 if __name__ == "__main__":
     main()
