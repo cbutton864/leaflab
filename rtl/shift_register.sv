@@ -36,6 +36,9 @@ module shift_register
     PASSTHRU
   } state_t;  // FSM states
 
+  //(* fsm_encoding = "one_hot" *) state_t state;
+  //only 2 states; one-hot encoding wouldn’t buy you much here,
+
   state_t q_state;
   state_t d_state; // Current and next state
 
@@ -66,7 +69,7 @@ module shift_register
   always_comb begin
     // Default next state
     d_state = q_state;
-    case (q_state)
+    unique case (q_state)
       SHIFT: begin
         // If the shift register's extra bit is high, transition to PASSTHRU
         if (r_shift_reg[WIDTH-1]) begin
@@ -93,7 +96,7 @@ module shift_register
     w_passthru_en = 1'b0;
     w_shift_en    = 1'b0;
     w_led_data    = 24'b0;
-    case (q_state)
+    unique case (q_state)
       SHIFT: begin
         // Allow the control edge to trigger a shift
         w_shift_en = i_shift_reg.shift_en;
