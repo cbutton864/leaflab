@@ -14,12 +14,18 @@ def run_lint(tool: str):
         subprocess.run(["iverilog", "-t", "null", "-Wall", "-o", "/dev/null", "-c", "lint_filelist.txt"], check=True)
     else:
         print("[INFO] Running Verilog lint using Questa...")
-        subprocess.run(["vsim", "-do", "lint.do"], check=True)
+        subprocess.run(["vsim","-c", "-do", "lint.do"], check=True)
 
 
 def run_sim(tool: str, gui: bool):
     sim_dir = Path("sim")
     sim_dir.mkdir(exist_ok=True)
+
+    # Ensure the work directory exists and is initialized
+    work_dir = Path("work")
+    if work_dir.exists():
+        shutil.rmtree(work_dir)  # Remove stale work directory
+    subprocess.run(["vlib", "work"], check=True)  # Initialize the work directory
 
     if tool == "icarus":
         print("[INFO] Running simulation using Icarus Verilog...")
@@ -30,14 +36,13 @@ def run_sim(tool: str, gui: bool):
         sim_flags = [
             "vsim",
             "-voptargs=+acc",
+            "-do", "sim.do",  # Ensure the sim.do script is executed
+
             "-wlf", str(sim_dir / "waves.wlf"),
             "-c" if not gui else "-gui",
-            "work.testbench",
-            "-do", "sim.do",
             "-l", str(sim_dir / "transcript.log"),
         ]
         subprocess.run(sim_flags, check=True)
-
 
 def clean():
     """Clean up generated simulation files and directories."""
@@ -45,6 +50,12 @@ def clean():
     if sim_dir.exists() and sim_dir.is_dir():
         print(f"[INFO] Removing simulation directory: {sim_dir}")
         shutil.rmtree(sim_dir)
+
+    # Remove all contents of the work directory if it exists
+    work_dir = Path("work")
+    if work_dir.exists() and work_dir.is_dir():
+        print(f"[INFO] Removing all contents of the work directory: {work_dir}")
+        shutil.rmtree(work_dir)
 
     # Remove other generated files if needed
     files_to_remove = ["transcript.log", "waves.wlf"]

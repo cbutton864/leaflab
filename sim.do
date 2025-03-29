@@ -22,8 +22,14 @@ vlog -sv -work work tb/led_test_monitor.sv
 vlog -sv -work work tb/test_runner.sv
 vlog -sv -work work tb/testbench.sv
 
-# Load the simulation
+# Load the testbench module for simulation
+vsim work.testbench
 
+# Log all signals in the design hierarchy
 log -r /*
+
+# Run the simulation
 run -all
+
+# Exit QuestaSim
 quit -f
