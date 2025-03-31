@@ -25,7 +25,7 @@ module top_led #(
 
   pipeline_types::decoder_input_t         decoder_input;  // Input struct for decoder_s1
   pipeline_types::shift_reg_input_t       shift_reg_input;  // Input struct for shift register
-  pipeline_types::control_path_t          control;
+  pipeline_types::edges_t                 edges;
 
   //////////////////////////////////////////////////////////////////////
   // Instance: Synchronizer
@@ -36,7 +36,7 @@ module top_led #(
       .i_reset_n     (i_rst_n),
       .i_signal_async(i_serial),
       .o_signal_syncd(signal_syncd),
-      .o_control     (control)
+      .o_edges       (edges)
   );
 
   //////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ module top_led #(
   timer u_timer (
       .i_clk          (i_clk),
       .i_reset_n      (i_rst_n),
-      .i_control      (control),
+      .i_edges        (edges),
       .o_decoder_input(decoder_input)  // Output struct for decoder_s1
   );
 
@@ -63,7 +63,7 @@ module top_led #(
   decoder u_decoder (
       .i_clk      (i_clk),
       .i_reset_n  (i_rst_n),
-      .i_control  (control),
+      .i_edges    (edges),
       .i_decoder  (decoder_input),   // Input struct for decoder_s1
       .o_shift_reg(shift_reg_input)  // Output struct for shift register
   );

@@ -15,7 +15,7 @@ module decoder
 (
     input  logic             i_clk,
     input  logic             i_reset_n,
-    input  control_path_t    i_control,
+    input  edges_t           i_edges,
     input  decoder_input_t   i_decoder,
     output shift_reg_input_t o_shift_reg
 );
@@ -26,9 +26,9 @@ module decoder
 
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  logic w_decode_bit;
+  logic w_decoded_bit;
   logic w_valid;  // Combinational decoded bit and valid flag
-  logic r_decode_bit;
+  logic r_decoded_bit;
   logic r_valid;  // Registered decoded bit and valid flag
 
   //////////////////////////////////////////////////////////////////////
@@ -36,19 +36,19 @@ module decoder
   // We decode the high cycle using a window comparator to determine if the bit value.
   always_comb begin
     // Default combinational outputs
-    w_decode_bit = 1'b0;
-    w_valid      = 1'b0;
+    w_decoded_bit = 1'b0;
+    w_valid       = 1'b0;
 
     // Check the T1H range
     if (i_decoder.counter >= timing_constants::T1H_CYCLES_DECODER_MIN &&
       i_decoder.counter <= timing_constants::T1H_CYCLES_DECODER_MAX) begin
-      w_decode_bit = 1'b1;
-      w_valid      = 1'b1;
+      w_decoded_bit = 1'b1;
+      w_valid       = 1'b1;
     end  // Check the T0H range
     else if (i_decoder.counter >= timing_constants::T0H_CYCLES_DECODER_MIN &&
       i_decoder.counter <= timing_constants::T0H_CYCLES_DECODER_MAX) begin
-      w_decode_bit = 1'b0;
-      w_valid      = 1'b1;
+      w_decoded_bit = 1'b0;
+      w_valid       = 1'b1;
     end
   end
 
@@ -56,11 +56,11 @@ module decoder
   // Register Logic
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
-      r_decode_bit <= 1'b0;
-      r_valid      <= 1'b0;
-    end else if (i_control.falling) begin
-      r_decode_bit <= w_decode_bit;
-      r_valid      <= w_valid;
+      r_decoded_bit <= 1'b0;
+      r_valid       <= 1'b0;
+    end else if (i_edges.falling) begin
+      r_decoded_bit <= w_decoded_bit;
+      r_valid       <= w_valid;
     end else begin
       r_valid <= 1'b0;
     end
@@ -68,8 +68,8 @@ module decoder
 
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
-  assign o_shift_reg.decode_bit = r_decode_bit;
-  assign o_shift_reg.shift_en   = r_valid;
-  assign o_shift_reg.treset     = i_decoder.counter[Cwidthcounter-1];
+  assign o_shift_reg.decode_bit      = r_decoded_bit;
+  assign o_shift_reg.valid  = r_valid;
+  assign o_shift_reg.treset = i_decoder.counter[Cwidthcounter-1];
 
 endmodule

@@ -33,6 +33,19 @@ class led_test_driver;
     end
   endtask
 
+  // send a brief(40ns) pulse to the serial line
+  task send_transient(input bit current_bit_value);
+    if (current_bit_value) begin
+      vif.serial_in = 0;
+      #40ns;
+      vif.serial_in = 1;
+    end else begin
+      vif.serial_in = 1;
+      #40ns;
+      vif.serial_in = 0;
+    end
+  endtask
+
   task send_bytes(input logic [23:0] bytes_to_send);
     for (int i = 23; i >= 0; i--) begin
       send_bit(bytes_to_send[i]);

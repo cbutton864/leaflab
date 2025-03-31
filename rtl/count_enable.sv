@@ -11,10 +11,10 @@ Date: March 19, 2025
 module count_enable
   import pipeline_types::*;  // Importing the pipeline types
 (
-    input  logic          i_clk,          // Clock input
-    input  logic          i_reset_n,      // Active low reset
-    input  control_path_t i_control,      // Control path input signal
-    output logic          o_count_enable  // Enable signal for the counter
+    input  logic   i_clk,          // Clock input
+    input  logic   i_reset_n,      // Active low reset
+    input  edges_t i_edges,        // Control path input signal
+    output logic   o_count_enable  // Enable signal for the counter
 
 );
 
@@ -41,7 +41,7 @@ module count_enable
         r_counter      <= '0;
         o_count_enable <= 1'b1;
       end
-      if (i_control.rising) begin
+      if (i_edges.rising) begin
         r_counter      <= '0;
         o_count_enable <= 1'b0;
       end

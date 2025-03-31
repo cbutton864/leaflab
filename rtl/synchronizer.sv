@@ -17,7 +17,7 @@ module synchronizer
     input  logic          i_reset_n,       // Active low reset
     input  logic          i_signal_async,  // Input signal to be synchronized
     output logic          o_signal_syncd,  // Synchronized output signal
-    output control_path_t o_control        // Control path output signal
+    output edges_t o_edges        // Control path output signal
 );
 
   ////////////////////////////////////////////////////////////////////
@@ -66,13 +66,13 @@ module synchronizer
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_debounce_signal_delayed <= 1'b0;
-      o_control <= pipeline_types::RESET_VALUES_CONTROL_PATH;
+      o_edges <= pipeline_types::RESET_VALUES_CONTROL_PATH;
     end else begin
       r_debounce_signal_delayed <= r_debounce_signal;
 
       // our edge detection logic
-      o_control.rising <= ~r_debounce_signal_delayed & r_debounce_signal;
-      o_control.falling <= r_debounce_signal_delayed & ~r_debounce_signal;
+      o_edges.rising <= ~r_debounce_signal_delayed & r_debounce_signal;
+      o_edges.falling <= r_debounce_signal_delayed & ~r_debounce_signal;
     end
   end
 

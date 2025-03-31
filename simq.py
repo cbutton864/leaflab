@@ -21,12 +21,6 @@ def run_sim(tool: str, gui: bool):
     sim_dir = Path("sim")
     sim_dir.mkdir(exist_ok=True)
 
-    # Ensure the work directory exists and is initialized
-    work_dir = Path("work")
-    if work_dir.exists():
-        shutil.rmtree(work_dir)  # Remove stale work directory
-    subprocess.run(["vlib", "work"], check=True)  # Initialize the work directory
-
     if tool == "icarus":
         print("[INFO] Running simulation using Icarus Verilog...")
         subprocess.run(["iverilog", "-o", str(sim_dir / "sim.out"), "-c", "sim_filelist.txt"], check=True)
@@ -35,13 +29,10 @@ def run_sim(tool: str, gui: bool):
         print("[INFO] Running simulation using Questa%s..." % (" (GUI mode)" if gui else ""))
         sim_flags = [
             "vsim",
-            "-voptargs=+acc",
-            "-do", "sim.do",  # Ensure the sim.do script is executed
-
-            "-wlf", str(sim_dir / "waves.wlf"),
-            "-c" if not gui else "-gui",
-            "-l", str(sim_dir / "transcript.log"),
+            "-c" if not gui else "-gui",  # Run in command-line or GUI mode
+            "-do", "sim.do"               # Specify the simulation script
         ]
+        print("Simulation flags:", sim_flags)  # Debug print to verify flags
         subprocess.run(sim_flags, check=True)
 
 def clean():
@@ -51,10 +42,10 @@ def clean():
         print(f"[INFO] Removing simulation directory: {sim_dir}")
         shutil.rmtree(sim_dir)
 
-    # Remove all contents of the work directory if it exists
+    #clean out the work directory
     work_dir = Path("work")
     if work_dir.exists() and work_dir.is_dir():
-        print(f"[INFO] Removing all contents of the work directory: {work_dir}")
+        print(f"[INFO] Removing work directory: {work_dir}")
         shutil.rmtree(work_dir)
 
     # Remove other generated files if needed
@@ -65,6 +56,18 @@ def clean():
             print(f"[INFO] Removing file: {file_path}")
             file_path.unlink()
 
+def view_wlf():
+    """Open the waves.wlf file in QuestaSim's wave viewer."""
+    wlf_file = Path("sim") / "waves.wlf"
+    if not wlf_file.exists():
+        print(f"[ERROR] Waveform file not found at {wlf_file}. Please run a simulation first.")
+        return
+    
+    print("[INFO] Opening waves.wlf in QuestaSim wave viewer...")
+    # vsim -view sim/waves.wlf
+    subprocess.run(["vsim", "-view", str(wlf_file)], check=True)
+    # view wave
+    subprocess.run(["vsim", "-do", "view wave"], check=True)
 
 def main():
     parser = argparse.ArgumentParser(description="Run simulation or lint using QuestaSim or Icarus Verilog")
@@ -72,11 +75,14 @@ def main():
     parser.add_argument("--gui", action="store_true", help="Run simulation in GUI mode")
     parser.add_argument("--tool", choices=["questa", "icarus"], default="questa", help="Select simulation tool")
     parser.add_argument("--clean", action="store_true", help="Clean up generated files")
+    parser.add_argument("--view", action="store_true", help="Open the waves.wlf file in QuestaSim wave viewer")
 
     args = parser.parse_args()
 
     if args.clean:
         clean()
+    elif args.view:
+        view_wlf()
     elif args.lint:
         run_lint(tool=args.tool)
     else:

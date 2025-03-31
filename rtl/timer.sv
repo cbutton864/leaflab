@@ -9,10 +9,10 @@ Date: March 19, 2025
 module timer
   import pipeline_types::*;  // Importing the pipeline types
 (
-    input   logic               i_clk,  // Clock input
-    input   logic               i_reset_n,  // Active low reset
-    input   control_path_t      i_control,  // Control path input signal
-    output  decoder_input_t     o_decoder_input  // Counter output signal
+    input  logic           i_clk,           // Clock input
+    input  logic           i_reset_n,       // Active low reset
+    input  edges_t         i_edges,         // Control path input signal
+    output decoder_input_t o_decoder_input  // Counter output signal
 );
 
   //////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ module timer
   count_enable u_count_enable (
       .i_clk         (i_clk),
       .i_reset_n     (i_reset_n),
-      .i_control     (i_control),
+      .i_edges       (i_edges),
       .o_count_enable(w_count_enable)
   );
 
@@ -36,7 +36,7 @@ module timer
       .i_clk          (i_clk),
       .i_reset_n      (i_reset_n),
       .i_count_enable (w_count_enable),
-      .i_control      (i_control),
+      .i_edges        (i_edges),
       .o_decoder_input(o_decoder_input)
   );
 

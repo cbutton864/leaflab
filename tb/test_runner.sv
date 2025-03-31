@@ -8,7 +8,7 @@ Date: March 19, 2025
 
 
 `ifndef TEST_RUNNER_SV
-`define TEST_RUNNER_SV
+`define TEST_RUNNER_SV 
 
 `include "led_test_driver.sv"
 `include "led_test_monitor.sv"
@@ -64,6 +64,7 @@ class test_runner;
     mon1.expect_led_data(24'h00FFCC);
     $display("[%0t] [TEST] Data shift test complete.", $time);
   endtask
+
 
   ////////////////////////////////////////////////////////////////////////
   /* Test 2: Test the DUTs ability to reset the latch
@@ -124,6 +125,31 @@ class test_runner;
     $display("[%0t] [TEST] Reset short test complete.", $time);
   endtask
 
+  ////////////////////////////////////////////////////////////////////////
+  /*Test 4: Send transient signal to DUT0 then data packets, verify
+  packets are received correctly
+  Req: DUT shall operate after recieving transient signal
+  Steps:
+  1. Send a transient signal to DUT0
+  2. Send a data packet to DUT0 & DUT1
+  3. Verify that DUT0 received the packet
+*/
+  task run_transient_test();
+    $display("[%0t] [TEST] Starting transient test...", $time);
+    $display("[%0t] [TEST] Sending packet to DUT0...", $time);
+    drv.send_bytes(24'hFF0000);
+    mon0.expect_led_data(24'hFF0000);
+
+    $display("[%0t] [TEST] Sending packet to DUT1...", $time);
+    #1000;
+    drv.send_transient(1'b0);  //TODO replace arg with serial_in
+    #1000;
+    drv.send_bytes(24'h0000FF);
+    #5000 mon1.expect_led_data(24'h0000FF);
+  endtask
+
+
+
   //Run manager
   task run_all();
     dut_reset();
@@ -137,6 +163,9 @@ class test_runner;
 
     dut_reset();
     run_reset_short_test();
+
+    dut_reset();
+    run_transient_test();
 
     $finish;
   endtask

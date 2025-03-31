@@ -23,13 +23,10 @@ vlog -sv -work work tb/test_runner.sv
 vlog -sv -work work tb/testbench.sv
 
 # Load the testbench module for simulation
-vsim work.testbench
+vsim -voptargs=+acc -wlf sim/waves.wlf -l sim/transcript.log work.testbench
 
 # Log all signals in the design hierarchy
 log -r /*
 
 # Run the simulation
 run -all
-
-# Exit QuestaSim
-quit -f

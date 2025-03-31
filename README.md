@@ -13,11 +13,10 @@ This design was initially intended to be implemented in Verilog with a Cocotb ru
 Run simulation or lint using QuestaSim or Icarus Verilog.
 
 #### Options:
-- `-h, --help`  q
-    Show this help message and exit.
-- `--lint`  
-    Run lint only.
-- `--gui`  
-    Run simulation in GUI mode.
-- `--tool {questa, icarus}`  
-    Select the simulation tool.
+  -h, --help            show this help message and exit
+  --lint                Run lint only
+  --gui                 Run simulation in GUI mode
+  --tool {questa,icarus}
+                        Select simulation tool
+  --clean               Clean up generated files
+  --view                Open the waves.wlf file in QuestaSim wave viewer

@@ -14,7 +14,7 @@ module counter
     input  logic           i_clk,           // Clock input
     input  logic           i_reset_n,       // Active low reset input
     input  logic           i_count_enable,  // Enable signal for the counter
-    input  control_path_t  i_control,       // Control path input signal
+    input  edges_t         i_edges,         // Control path input signal
     output decoder_input_t o_decoder_input  // Counter output signal
 );
 
@@ -43,7 +43,7 @@ module counter
       end
 
       // Then we check for an edge condition to reset the counter
-      if (i_control.rising || i_control.falling) begin
+      if (i_edges.rising || i_edges.falling) begin
         r_counter <= '0;
       end
     end
