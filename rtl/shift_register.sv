@@ -99,7 +99,7 @@ module shift_register
     unique case (q_state)
       SHIFT: begin
         // Allow the control edge to trigger a shift
-        w_shift_en = i_shift_reg.shift_en;
+        w_shift_en = i_shift_reg.valid;
         w_led_data = r_led_data;
       end
       PASSTHRU: begin
