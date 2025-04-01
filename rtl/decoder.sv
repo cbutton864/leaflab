@@ -1,7 +1,7 @@
 /*
 Module Name: decoder
 Description: Decodes WS2812 signal timing using a window comparator.
-             Determines the bit value and validity based on the timer value.
+             Determines the bit value based on the timer.
              Outputs the decoded bit, valid flag, and pipeline signals.
 
 Author: Curtis Button
@@ -32,7 +32,7 @@ module decoder
     // Default combinational outputs
     w_decoded_bit = 1'b0;
     w_valid       = 1'b0;
-    // We'll set the decode bit high if the timer value is within the T1H range
+    // Set the decode bit high if the timer value is within the T1H range
     if (i_timer_value >= T1H_CYCLES_DECODER_MIN && i_timer_value <= T1H_CYCLES_DECODER_MAX) begin
       w_decoded_bit = 1'b1;
       w_valid       = 1'b1;

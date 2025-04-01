@@ -112,19 +112,15 @@ module shift_register
 
   //////////////////////////////////////////////////////////////////////
   // Shift Register Logic
-  // This will manage the shift register operation based on the input signals
+  // Shifts on enable strobe and resetswhe treset is flagged.
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_shift_reg <= Cresetvalue;
-      r_led_data  <= 24'b0;  // Reset r_led_data to 0
+      r_led_data  <= 24'b0;
     end else begin
-      // we should make some syncronous memory for the LED data
-      // to reduce combinatorial paths / complexity
       r_led_data <= w_led_data;
-
-      // Conditional logic for r_shift_reg
       if (i_shift_reg.treset) begin
-        r_shift_reg <= Cresetvalue;
+        r_shift_reg <= Cresetvalue; // Reset to all zeros and control bit high
       end else if (w_shift_en) begin
         r_shift_reg <= {r_shift_reg[WIDTH-2:0], i_shift_reg.decoded_bit};
       end

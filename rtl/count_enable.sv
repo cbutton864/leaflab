@@ -23,7 +23,7 @@ module count_enable
 
   //////////////////////////////////////////////////////////////////////
   // Counter Logic
-  // Here we increment the counter and generate the clock enable signal
+  // Generates the clock enable strobe for the counter module.
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_counter      <= '0;

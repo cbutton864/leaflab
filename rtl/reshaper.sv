@@ -1,7 +1,7 @@
 /*
 Module Name: reshaper
-Description: This module reshapes input signals to generate a WS2812-compatible serial output.
-             To meet the nominal timing requirements of the WS2812 protocol.
+Description: This module reshapes input signals to generate a WS2812-compatible output,
+             ensuring compliance with the WS2812 timing requirements.
 
 Author: Curtis Button
 Date: March 19, 2025
@@ -31,9 +31,9 @@ module reshaper
     if (!i_reset_n) begin
       r_counter <= '0;
     end else if (r_counter == {WIDTH{1'b1}}) begin
-      r_counter <= r_counter;  // To make it easy stall counter when msb is high
+      r_counter <= r_counter;  // Stall counter when msb is high
     end else if (i_signal) begin
-      r_counter <= r_counter + 1;  // Our counter will increment when the signal is high
+      r_counter <= r_counter + 1;  // We count when the signal is high
     end else begin
       r_counter <= '0;  // Reset counter when signal is low
     end

@@ -1,6 +1,6 @@
 /*
 Module Name: counter
-Description: Simple counter module with reset and enable functionality.
+Description: Simple counter module with CE.
 
 Author: Curtis Button
 Date: March 19, 2025
@@ -24,9 +24,9 @@ module counter
 
   //////////////////////////////////////////////////////////////////////
   // Counter Logic
-  // Here we increment the counter with the CE to reduce the effective
-  // clock rate. We also stop the counter at an easy value past the ws2812
-  // reset duration to prevent roll over.
+  // The counter is shared between the high cycle and low cycle, so it
+  // will be reset when the edges are detected. It will alsoo stall when the
+  // msb is high, preventing rolling-over.
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_counter <= '0;
