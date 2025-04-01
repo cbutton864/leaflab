@@ -1,8 +1,6 @@
 /*
 Module Name: counter
 Description: Simple counter module with reset and enable functionality.
-The counter increments when enabled and resets on rising or falling edges.
-Outputs the counter value along with rising and falling edge flags.
 
 Author: Curtis Button
 Date: March 19, 2025
@@ -10,38 +8,33 @@ Date: March 19, 2025
 
 module counter
   import pipeline_types::*;
-(
-    input  logic           i_clk,           // Clock input
-    input  logic           i_reset_n,       // Active low reset input
-    input  logic           i_count_enable,  // Enable signal for the counter
-    input  edges_t         i_edges,         // Control path input signal
-    output decoder_input_t o_decoder_input  // Counter output signal
+#(
+    parameter int WIDTH = 10  // Counter width
+) (
+    input  logic               i_clk,
+    input  logic               i_reset_n,
+    input  logic               i_count_enable,  // Enable signal for the counter
+    input  edges_t             i_edges,         // Control path input signal
+    output logic   [WIDTH-1:0] o_timer_value    // Counter output value
 );
 
   //////////////////////////////////////////////////////////////////////
-  // Parameters and Constants
-  localparam int WIDTH = 10;  // Fixed width of the counter
-
-  //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  logic [WIDTH-1:0] r_counter;  // Internal counter register
+  logic [WIDTH-1:0] r_counter;
 
   //////////////////////////////////////////////////////////////////////
   // Counter Logic
   // Here we increment the counter with the CE to reduce the effective
-  // clock rate of the counter. We also stop the counter at an easy
-  // value past the ws2812 reset duration to prevent roll over.
+  // clock rate. We also stop the counter at an easy value past the ws2812
+  // reset duration to prevent roll over.
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_counter <= '0;
     end else begin
-      // First, we increment the counter with the CE to reduce the effective
-      // clock rate of the counter. We also stop the counter at an easy
-      // value past the ws2812 reset duration to prevent roll over.
+      // The counter will increment when the count_enable signal is high
       if (i_count_enable && !r_counter[WIDTH-1]) begin
         r_counter <= r_counter + 1;
       end
-
       // Then we check for an edge condition to reset the counter
       if (i_edges.rising || i_edges.falling) begin
         r_counter <= '0;
@@ -51,6 +44,6 @@ module counter
 
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
-  assign o_decoder_input = '{counter: r_counter};
+  assign o_timer_value = r_counter;
 
 endmodule

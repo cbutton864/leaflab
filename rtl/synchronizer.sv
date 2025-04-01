@@ -1,35 +1,36 @@
 /*
 Module Name: synchronizer
 
-Description: 2-stage flip-flop synchronizer into a debounce circuit, followed
-edge detection. Module outputs a synchronized signal, rising edge, and falling edge.
+Description: Implements a 2-stage flip-flop synchronizer followed by a debounce
+             circuit and edge detection logic. Outputs a synchronized signal,
+             rising edge, and falling edge indicators.
 
 Author: Curtis Button
 Date: March 19, 2025
 */
 
 module synchronizer
-    import pipeline_types::*;  // Importing the pipeline types
+  import pipeline_types::*;
 #(
     parameter int DEBOUNCE_CYCLES = 5  // Number of cycles for debouncing
 ) (
-    input  logic          i_clk,           // Clock input
-    input  logic          i_reset_n,       // Active low reset
-    input  logic          i_signal_async,  // Input signal to be synchronized
-    output logic          o_signal_syncd,  // Synchronized output signal
-    output edges_t o_edges        // Control path output signal
+    input  logic   i_clk,
+    input  logic   i_reset_n,
+    input  logic   i_signal_async,  // Input signal to be synchronized
+    output logic   o_signal_syncd,  // Synchronized output signal
+    output edges_t o_edges          // Control path output signal
 );
 
   ////////////////////////////////////////////////////////////////////
   // Internal registers and signals
-  logic r_signal_meta, r_signal_syncd;  // Meta-stable and synchronized signals
-  // Debounce-related signals
-  logic r_debounce_signal, r_debounce_signal_delayed;  // Debounced signal
-  logic [DEBOUNCE_CYCLES-1:0] r_shift_reg;  // Shift register for each bit
+  logic r_signal_meta, r_signal_syncd;
+
+  // Debounce signals
+  logic r_debounce_signal, r_debounce_signal_delayed;
+  logic [DEBOUNCE_CYCLES-1:0] r_shift_reg;
 
   ////////////////////////////////////////////////////////////////////
   // Synchronizer Logic
-  // a simple dual flop with with an added stage
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_signal_meta  <= '0;
@@ -42,15 +43,16 @@ module synchronizer
 
   ////////////////////////////////////////////////////////////////////
   // Shift Register-Based Debounce Logic
-  // we shift in sampled signal and check for register uniformity
+  // We shift in sampled signal and check for register uniformity
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_debounce_signal <= '0;
       r_shift_reg <= '0;
     end else begin
-      // we shift the bits in the shift register
+      // Shift in our synchronized signal
       r_shift_reg <= {r_shift_reg[DEBOUNCE_CYCLES-2:0], r_signal_syncd};
-      // we now check if all bits in the shift register are the same
+
+      // Now check if all bits in the shift register are the same
       if (&r_shift_reg) begin
         r_debounce_signal <= 1'b1;  // All bits are 1
       end else if (~|r_shift_reg) begin
@@ -66,7 +68,7 @@ module synchronizer
   always_ff @(posedge i_clk or negedge i_reset_n) begin
     if (!i_reset_n) begin
       r_debounce_signal_delayed <= 1'b0;
-      o_edges <= pipeline_types::RESET_VALUES_CONTROL_PATH;
+      o_edges <= RESET_VALUES_CONTROL_PATH;
     end else begin
       r_debounce_signal_delayed <= r_debounce_signal;
 
@@ -77,7 +79,7 @@ module synchronizer
   end
 
   ////////////////////////////////////////////////////////////////////
-  // Assign Debounced Signal to Output
+  // Output Assignments
   assign o_signal_syncd = r_debounce_signal;
 
 endmodule

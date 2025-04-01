@@ -66,8 +66,6 @@ def view_wlf():
     print("[INFO] Opening waves.wlf in QuestaSim wave viewer...")
     # vsim -view sim/waves.wlf
     subprocess.run(["vsim", "-view", str(wlf_file)], check=True)
-    # view wave
-    subprocess.run(["vsim", "-do", "view wave"], check=True)
 
 def main():
     parser = argparse.ArgumentParser(description="Run simulation or lint using QuestaSim or Icarus Verilog")

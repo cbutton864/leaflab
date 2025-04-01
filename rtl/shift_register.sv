@@ -1,32 +1,29 @@
 /*
------------------------------------------------------------------------------
 Module Name: shift_register
-Description: Implements a shift register for WS2812 signal processing. The shift
-Register is 25-bit, 24 for the LED data and 1 extra bit for control. The module
-directs data to either passthrough or shift based on the extra bit's state.
+Description: Implements a 25-bit shift register for WS2812 signal processing.
+             - 24 bits are used for LED data.
+             - 1 extra bit is used for the control 'marker'
+             The module supports passthrough or shift operations based on the state
+             of the control bit.
+
 Author: Curtis Button
-
 Date: March 19, 2025
-
------------------------------------------------------------------------------
-
 */
-
-
 
 module shift_register
   import pipeline_types::*;
-(
-    input  logic                    i_clk,
-    input  logic                    i_reset_n,
-    input  shift_reg_input_t        i_shift_reg,
-    output logic             [23:0] o_led_data,    // Output for the LED data (24 bits)
-    output logic                    o_passthru_en  // Output for passthrough enable
+#(
+    parameter int WIDTH = 25  // Shift register width (24 bits for LED data + 1 control bit)
+) (
+    input  logic                   i_clk,
+    input  logic                   i_reset_n,
+    input  shift_reg_t             i_shift_reg,  // Input for the shift register
+    output logic       [WIDTH-2:0] o_led_data,   // Output for the LED data (24 bits)
+    output reshaper_t              o_reshaper    // Output for passthru/reshaper
 );
 
   //////////////////////////////////////////////////////////////////////
   // Parameters and Constants
-  localparam int WIDTH = 25;  // Fixed width of the shift register
   localparam logic [WIDTH-1:0] Cresetvalue = {{(WIDTH - 1) {1'b0}}, 1'b1};  // SR Reset value
 
   //////////////////////////////////////////////////////////////////////
@@ -37,20 +34,18 @@ module shift_register
   } state_t;  // FSM states
 
   //(* fsm_encoding = "one_hot" *) state_t state;
-  //only 2 states; one-hot encoding wouldn’t buy you much here,
+  //only 2 states; one-hot encoding if more than 2 states
 
-  state_t q_state;
-  state_t d_state; // Current and next state
+  state_t q_state, d_state;  // State registers for the FSM
 
   //////////////////////////////////////////////////////////////////////
   // Shift Register Signals
   logic [WIDTH-1:0] r_shift_reg;
   // Control Signals
   logic w_passthru_en;
-  logic w_shift_en   ;
+  logic w_shift_en;
   // LED Data
-  logic [23:0] w_led_data;
-  logic [23:0] r_led_data;
+  logic [23:0] w_led_data, r_led_data;
 
   //////////////////////////////////////////////////////////////////////
   // FSM Logic
@@ -131,14 +126,15 @@ module shift_register
       if (i_shift_reg.treset) begin
         r_shift_reg <= Cresetvalue;
       end else if (w_shift_en) begin
-        r_shift_reg <= {r_shift_reg[WIDTH-2:0], i_shift_reg.decode_bit};
+        r_shift_reg <= {r_shift_reg[WIDTH-2:0], i_shift_reg.decoded_bit};
       end
     end
   end
 
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
-  assign o_passthru_en = w_passthru_en;  // Assign passthrough enable output
-  assign o_led_data    = r_led_data;  // Assign LED data output
+  assign o_reshaper.enable      = w_passthru_en;
+  assign o_reshaper.decoded_bit = i_shift_reg.decoded_bit;
+  assign o_led_data             = r_led_data;
 
 endmodule

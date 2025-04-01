@@ -1,9 +1,8 @@
 /*
-Module Name: decoder_s1
-Description: Decodes stage 1 (high cycle) for WS2812 signal processing.
-Uses a window comparator to decode the high cycle, ensuring the bit value
-and valid flag are within the specified timing ranges. Outputs the decoded
-bit, valid flag, and other pipeline signals to the next stage.
+Module Name: decoder
+Description: Decodes WS2812 signal timing using a window comparator.
+             Determines the bit value and validity based on the timer value.
+             Outputs the decoded bit, valid flag, and pipeline signals.
 
 Author: Curtis Button
 Date: March 19, 2025
@@ -12,41 +11,34 @@ Date: March 19, 2025
 module decoder
   import pipeline_types::*;
   import timing_constants::*;
-(
-    input  logic             i_clk,
-    input  logic             i_reset_n,
-    input  edges_t           i_edges,
-    input  decoder_input_t   i_decoder,
-    output shift_reg_input_t o_shift_reg
+#(
+    parameter int WIDTH = 10  // Counter width
+) (
+    input  logic                   i_clk,
+    input  logic                   i_reset_n,
+    input  edges_t                 i_edges,        // Edge detection signals
+    input  logic       [WIDTH-1:0] i_timer_value,  // Timer value from the counter
+    output shift_reg_t             o_shift_reg     // Output struct for shift register
 );
 
   //////////////////////////////////////////////////////////////////////
-  // Parameters and Constants
-  localparam int Cwidthcounter = 10;  // Fixed width of the counter
-
-  //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  logic w_decoded_bit;
-  logic w_valid;  // Combinational decoded bit and valid flag
-  logic r_decoded_bit;
-  logic r_valid;  // Registered decoded bit and valid flag
+  logic w_decoded_bit, r_decoded_bit;
+  logic w_valid, r_valid;
 
   //////////////////////////////////////////////////////////////////////
   // Decode High Cycle Logic (Window Comparator)
-  // We decode the high cycle using a window comparator to determine if the bit value.
   always_comb begin
     // Default combinational outputs
     w_decoded_bit = 1'b0;
     w_valid       = 1'b0;
-
-    // Check the T1H range
-    if (i_decoder.counter >= timing_constants::T1H_CYCLES_DECODER_MIN &&
-      i_decoder.counter <= timing_constants::T1H_CYCLES_DECODER_MAX) begin
+    // We'll set the decode bit high if the timer value is within the T1H range
+    if (i_timer_value >= T1H_CYCLES_DECODER_MIN && i_timer_value <= T1H_CYCLES_DECODER_MAX) begin
       w_decoded_bit = 1'b1;
       w_valid       = 1'b1;
-    end  // Check the T0H range
-    else if (i_decoder.counter >= timing_constants::T0H_CYCLES_DECODER_MIN &&
-      i_decoder.counter <= timing_constants::T0H_CYCLES_DECODER_MAX) begin
+      // If the timer value is within the T0H range, we set the decode bit low
+    end else if (i_timer_value >= T0H_CYCLES_DECODER_MIN &&
+      i_timer_value <= T0H_CYCLES_DECODER_MAX) begin
       w_decoded_bit = 1'b0;
       w_valid       = 1'b1;
     end
@@ -68,8 +60,8 @@ module decoder
 
   //////////////////////////////////////////////////////////////////////
   // Output Assignments
-  assign o_shift_reg.decode_bit      = r_decoded_bit;
-  assign o_shift_reg.valid  = r_valid;
-  assign o_shift_reg.treset = i_decoder.counter[Cwidthcounter-1];
+  assign o_shift_reg.decoded_bit = r_decoded_bit;
+  assign o_shift_reg.valid       = r_valid;
+  assign o_shift_reg.treset      = i_timer_value[WIDTH-1];
 
 endmodule

@@ -38,7 +38,7 @@ class led_test_monitor;
     // Wait until o_led_data becomes known (not 'x')
     wait (last_seen_led_data !== 'x);
 
-    #1;  // Optional: small delay
+    #1;  // why not wait for 1 time unit to ensure the value is stable
     if (last_seen_led_data !== expected) begin
       $error("[%0t] [MONITOR] Mismatch! Expected: %h, Got: %h", $time, expected,
              last_seen_led_data);

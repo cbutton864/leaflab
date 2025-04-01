@@ -8,7 +8,7 @@ Date: March 19, 2025
 
 
 `ifndef TEST_RUNNER_SV
-`define TEST_RUNNER_SV 
+`define TEST_RUNNER_SV
 
 `include "led_test_driver.sv"
 `include "led_test_monitor.sv"

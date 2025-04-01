@@ -8,7 +8,8 @@ Author: Curtis Button
 Date: March 19, 2025
 */
 module top_led #(
-    parameter int DEBOUNCEWIDTH = 5  // Number of cycles for debouncing
+    parameter int DEBOUNCEWIDTH = 5,  // Number of cycles for debouncing
+    parameter int CWIDTH = 10  // Width of the counter
 ) (
     input  logic        i_clk,
     input  logic        i_rst_n,
@@ -19,13 +20,12 @@ module top_led #(
 
   //////////////////////////////////////////////////////////////////////
   // Internal Signals
-  logic                                   signal_syncd;  // Synchronized signal
-  logic                             [9:0] count;  // Counter output from the timer
-  logic                                   passthru_en;  // Passthrough enable from shift register
+  logic                                    signal_syncd;
+  logic                       [CWIDTH-1:0] timer_value;
 
-  pipeline_types::decoder_input_t         decoder_input;  // Input struct for decoder_s1
-  pipeline_types::shift_reg_input_t       shift_reg_input;  // Input struct for shift register
-  pipeline_types::edges_t                 edges;
+  pipeline_types::shift_reg_t              shift_reg;  // Input struct for shift register
+  pipeline_types::edges_t                  edges;  // serial edge detect signals
+  pipeline_types::reshaper_t               reshaper;  // Input struct for reshaper
 
   //////////////////////////////////////////////////////////////////////
   // Instance: Synchronizer
@@ -42,10 +42,10 @@ module top_led #(
   //////////////////////////////////////////////////////////////////////
   // Instance: Timer
   timer u_timer (
-      .i_clk          (i_clk),
-      .i_reset_n      (i_rst_n),
-      .i_edges        (edges),
-      .o_decoder_input(decoder_input)  // Output struct for decoder_s1
+      .i_clk        (i_clk),
+      .i_reset_n    (i_rst_n),
+      .i_edges      (edges),
+      .o_timer_value(timer_value)
   );
 
   //////////////////////////////////////////////////////////////////////
@@ -53,29 +53,29 @@ module top_led #(
   reshaper u_reshaper (
       .i_clk            (i_clk),
       .i_reset_n        (i_rst_n),
-      .i_passthru_en    (passthru_en),   // Passthrough enable signal
-      .i_signal_synced  (signal_syncd),  // Synchronized signal from synchronizer
-      .o_reshaped_signal(o_serial)       // Reshaped signal
+      .i_reshaper       (reshaper),
+      .i_signal         (signal_syncd),
+      .o_reshaped_signal(o_serial)
   );
 
   //////////////////////////////////////////////////////////////////////
   // Instance: Decoder
   decoder u_decoder (
-      .i_clk      (i_clk),
-      .i_reset_n  (i_rst_n),
-      .i_edges    (edges),
-      .i_decoder  (decoder_input),   // Input struct for decoder_s1
-      .o_shift_reg(shift_reg_input)  // Output struct for shift register
+      .i_clk        (i_clk),
+      .i_reset_n    (i_rst_n),
+      .i_edges      (edges),
+      .i_timer_value(timer_value),
+      .o_shift_reg  (shift_reg)
   );
 
   //////////////////////////////////////////////////////////////////////
   // Instance: Shift Register
   shift_register u_shift_register (
-      .i_clk        (i_clk),
-      .i_reset_n    (i_rst_n),
-      .i_shift_reg  (shift_reg_input),  // Input struct from decoder
-      .o_led_data   (o_led_data),       // LED data output
-      .o_passthru_en(passthru_en)       // Passthrough enable output
+      .i_clk      (i_clk),
+      .i_reset_n  (i_rst_n),
+      .i_shift_reg(shift_reg),
+      .o_led_data (o_led_data),
+      .o_reshaper (reshaper)
   );
 
 endmodule
