@@ -1,5 +1,5 @@
 
-`include "led_defines.v"
+`include "leaflab/inc/led_defines.v"
 
 reg serial_in;
 wire [1:0] serial_out;
