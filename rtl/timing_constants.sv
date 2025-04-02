@@ -1,6 +1,6 @@
 package timing_constants;
 
-  // Define constants directly
+  // Constants decoder
   localparam int T_TOLERANCE = 15;
   localparam int T1H_CYCLES_DECODER = 70 / 5;
   localparam int T1H_CYCLES_DECODER_MIN = (70 - T_TOLERANCE) / 5;
@@ -16,7 +16,7 @@ package timing_constants;
   localparam int T0L_CYCLES_DECODER_MAX = (80 + T_TOLERANCE) / 5;
   localparam int TRESET_CYCLES_DECODER = 5000 / 5;
 
-  // Define constants encoder(shaper)
+  // Constants encoder(shaper)
   localparam int T1H_CYCLES_ENCODER = 70;
   localparam int T1H_CYCLES_ENCODER_MIN = 70 - T_TOLERANCE;
   localparam int T1H_CYCLES_ENCODER_MAX = 70 + T_TOLERANCE;
