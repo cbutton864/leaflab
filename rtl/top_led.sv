@@ -7,6 +7,7 @@ Top level module for the LED controller.
 Author: Curtis Button
 Date: March 19, 2025
 */
+
 module top_led #(
     parameter int DEBOUNCEWIDTH = 5,  // Number of cycles for debouncing
     parameter int CWIDTH = 10  // Width of the counter
