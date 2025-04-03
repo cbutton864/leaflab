@@ -4,10 +4,10 @@ This repository contains the WS2812 LED controller exercise submission for Leafl
 
 ## Runner
 
-This design was initially intended to be implemented in Verilog with a Cocotb runner. However, due to certain design decisions, it was changed to SystemVerilog. The use of QuestaSim is required due to the OOP features in the testbenches.
+This design was initially intended to be implemented in Verilog with a mixed cocotb/verilog testbench. However, due to certain design decisions, it was changed to SystemVerilog. The use of QuestaSim is required due to the OOP features in the testbenches.
 
 ### Notes:
-- Icarus Verilog will not work until a Cocotb testbench alternative is developed.
+- Icarus Verilog will features will be operational soon. 
 
 ### Usage:
 Run simulation or lint using QuestaSim or Icarus Verilog.
