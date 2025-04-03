@@ -1,6 +1,6 @@
 # Leaflab Project
 
-This repository contains the WS2812 LED controller exercise submission for Leaflabs. For documented design-related information and decisions, refer to `design_note.md`.
+This repository contains the WS2812 LED controller. For documented design-related information and decisions, refer to `design_note.md`.
 
 ## Runner
 
