@@ -1,6 +1,8 @@
 import os
 import subprocess
 import sys
+import argparse
+import shutil
 
 # Define Verilator command and options
 VERILATOR = "verilator"
@@ -13,7 +15,7 @@ TESTBENCHES = [
 
 # Define source files
 SRC_FILES = [
-    "tb/led.v",  # Add led.v here
+    "tb/led.v",
     "rtl/pipeline_types.sv",
     "rtl/timing_constants.sv",
     "rtl/timer.sv",
@@ -41,8 +43,25 @@ def run_command(cmd):
         print(f"Error: Command failed with return code {e.returncode}")
         sys.exit(1)
 
-# Main function
-def main():
+# Function to clean up generated files
+def clean():
+    print("Cleaning up generated files...")
+    obj_dir = "obj_dir"
+    if os.path.exists(obj_dir):
+        print(f"Removing directory: {obj_dir}")
+        shutil.rmtree(obj_dir)
+
+    # Remove other generated files if needed
+    files_to_remove = ["verilator.log"]
+    for file in files_to_remove:
+        if os.path.exists(file):
+            print(f"Removing file: {file}")
+            os.remove(file)
+
+    print("Clean completed.")
+
+# Function to run simulations
+def run_simulation():
     for tb in TESTBENCHES:
         tb_name = os.path.basename(tb).replace(".v", "")  # Extract testbench name
         print(f"Running testbench: {tb_name}")
@@ -62,13 +81,28 @@ def main():
         run_command(make_cmd)
 
         # Step 3: Run the compiled simulation
-        sim_executable = os.path.join(obj_dir, f"V{tb_name}")  # Fix: Use V<module_name>
+        sim_executable = os.path.join(obj_dir, f"V{tb_name}")
         print(f"Running simulation for {tb_name}...")
         run_command([sim_executable])
 
         print(f"Testbench {tb_name} completed successfully.\n")
 
     print("All testbenches completed successfully.")
+
+# Main function
+def main():
+    parser = argparse.ArgumentParser(description="Run Verilator simulations or clean up generated files.")
+    parser.add_argument("--clean", action="store_true", help="Clean up generated files.")
+    parser.add_argument("--run", action="store_true", help="Run simulations.")
+
+    args = parser.parse_args()
+
+    if args.clean:
+        clean()
+    elif args.run:
+        run_simulation()
+    else:
+        print("No action specified. Use --run to run simulations or --clean to clean up.")
 
 # Entry point
 if __name__ == "__main__":

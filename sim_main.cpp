@@ -1,29 +1,52 @@
-#include "Vone_led_nominal_timing_tb.h"  // Include the Verilated model for the testbench
-#include "verilated.h"                  // Include Verilator utilities
-#include "verilated_vcd_c.h"            // For waveform generation (optional)
+#include "Vone_led_nominal_timing_tb.h"
+#include "verilated.h"
+#include "verilated_vcd_c.h"
 
 int main(int argc, char **argv) {
-    Verilated::commandArgs(argc, argv); // Initialize Verilator arguments
+    Verilated::commandArgs(argc, argv);
 
-    // Instantiate the DUT (Device Under Test)
+    // Instantiate DUT
     Vone_led_nominal_timing_tb *dut = new Vone_led_nominal_timing_tb;
 
-    // Optional: Enable waveform generation
-    Verilated::traceEverOn(true); // Enable tracing
-    VerilatedVcdC *vcd = nullptr;
-    vcd = new VerilatedVcdC;
-    dut->trace(vcd, 99); // Trace 99 levels of hierarchy
+    // Enable waveform tracing
+    Verilated::traceEverOn(true);
+    VerilatedVcdC *vcd = new VerilatedVcdC;
+    dut->trace(vcd, 99);
     vcd->open("one_led_nominal_timing_tb.vcd");
 
-    // Simulation loop
-    for (int time = 0; time < 1000; time++) {
-        dut->eval();                 // Evaluate the DUT
+    // Initialize signals
+    dut->clk = 0;
+    dut->reset = 1;
 
-        if (vcd) vcd->dump(time);    // Dump waveform data
+    vluint64_t time = 0;
+    const int sim_time = 100000;
+
+    // Dump the initial state
+    dut->eval();
+    vcd->dump(time);
+
+    int clk = 0;
+
+    while (time < sim_time) {
+        // Toggle clock every 5 time units (full period = 10 time units = 10 ns)
+        if ((time % 5) == 0) {
+            clk = !clk;
+            dut->clk = clk;
+        }
+
+        // Deassert reset after 100 ns (10 cycles of 10 ns)
+        if (time > 100) {
+            dut->reset = 0;
+        }
+
+        dut->eval();
+        vcd->dump(time);
+        Verilated::timeInc(1);  // advance Verilator's internal time
+        time++;
     }
 
-    // Cleanup
-    if (vcd) vcd->close();
+    // Finalize and cleanup
+    vcd->close();
     delete dut;
     return 0;
 }

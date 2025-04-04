@@ -23,19 +23,19 @@ module led(
     .o_led_data(o_led_data)
   );
 
-  // Clock generation
-  reg i_clk;
-  initial begin
-    i_clk = 0;
-    forever #5 i_clk = ~i_clk; // 10ns clock period
-  end
+  // // Clock generation
+  // reg i_clk;
+  // initial begin
+  //   i_clk = 0;
+  //   forever #5 i_clk = ~i_clk; // 10ns clock period
+  // end
 
-  // Reset generation
-  reg i_rst_n;
-  initial begin
-    i_rst_n = 0; // Assert reset
-    #20;         // Hold reset for 20ns
-    i_rst_n = 1; // Deassert reset
-  end
+  // // Reset generation
+  // reg i_rst_n;
+  // initial begin
+  //   i_rst_n = 0; // Assert reset
+  //   #20;         // Hold reset for 20ns
+  //   i_rst_n = 1; // Deassert reset
+  // end
 
 endmodule

@@ -2,15 +2,21 @@
 
 `include "leaflab/inc/led_defines.v"
 
-module one_led_nominal_timing_tb;
+module one_led_nominal_timing_tb(
+    input wire clk,          // Clock input from the C++ simulation
+    input wire reset         // Reset input from the C++ simulation
+);
     `include "leaflab/inc/bitbang_tasks.v"
     
     // Instantiate the DUT
     led dut(
+        .i_clk(clk),          // Pass the clock to the DUT
+        .i_rst_n(reset),      // Pass the reset to the DUT
         .i_serial(serial_in),
         .o_serial(serial_out),
         .o_led_data(data_out[0])
     );
+
     initial begin
         reg [23:0] data_out_lcl;
 
@@ -22,7 +28,7 @@ module one_led_nominal_timing_tb;
         $display("Starting the test...");
 
         // Wait at least 50us to ensure reset completion
-        #(`RET);
+        #50000; // 50 microseconds
 
         $display("Sending LED data...");
         send_bytes(24'hFF00FF);
@@ -33,7 +39,7 @@ module one_led_nominal_timing_tb;
             $display("PASS: LED output correct!");
         end
 
-        #1000; // Wait some time before finishing
+        #10000; // Wait some time before finishing
         $display("Ending the test...");
 
         $finish;

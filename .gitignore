@@ -3,3 +3,4 @@ sim/
 vsim.wlf
 transcript
 lint_report.txt
+obj_dir/
